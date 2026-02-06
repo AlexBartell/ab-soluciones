@@ -85,25 +85,29 @@ export default function IsopanelBudget() {
         {/* IZQ */}
         <div>
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Calculá un precio estimado en 20 segundos
+            Calculá un estimado en 20 segundos
           </h2>
 
           <p className="mt-3 text-slate-600 md:text-lg">
-            Ingresá las medidas y te mostramos una <strong>estimación</strong>.
-            Si te cierra, te respondemos por WhatsApp con un presupuesto final.
+            Poné las medidas y te mostramos un <strong>precio orientativo</strong>. Si te sirve,
+            nos escribís por WhatsApp y te pasamos el presupuesto final.
           </p>
 
           <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
             <p className="text-sm font-semibold text-slate-900">Cómo medir</p>
             <p className="mt-2 text-sm text-slate-700">
               <strong>Ancho</strong> = dirección de la caída. <br />
-              <strong>Largo</strong> = perpendicular a la caída (define cantidad de paneles).
+              <strong>Largo</strong> = perpendicular a la caída.
             </p>
 
             <p className="mt-3 text-xs text-slate-500">
-              * Precio base: <strong>{PRICE_PER_M2} USD/m²</strong>.
+              Base: <strong>{PRICE_PER_M2} USD/m²</strong> (material + colocación, estimado).
             </p>
           </div>
+
+          <p className="mt-4 text-sm text-slate-600">
+            ¿Tenés dudas con la medida? Igual escribinos y te guiamos en 1 minuto.
+          </p>
         </div>
 
         {/* DER */}
@@ -174,17 +178,18 @@ export default function IsopanelBudget() {
             <div className="rounded-2xl border border-slate-200 p-5">
               {!calc.valid ? (
                 <p className="text-sm text-slate-600">
-                  Ingresá ancho y largo para ver el total estimado.
+                  Ingresá ancho y largo para ver el total.
                 </p>
               ) : (
                 <div className="space-y-4">
                   <div className="rounded-2xl bg-slate-900 p-5 text-white">
                     <p className="text-xs text-white/80">
-                      Total estimado {conCanaleta ? "(incluye canaleta/desagüe)" : ""}
+                      Total estimado{" "}
+                      {conCanaleta ? "(incluye canaleta/desagüe)" : ""}
                     </p>
                     <p className="mt-1 text-3xl font-semibold">{money(calc.total)}</p>
                     <p className="mt-2 text-xs text-white/70">
-                      Estimación basada en m² de material (módulos de panel).
+                      Orientativo. El final se confirma con visita técnica.
                     </p>
                   </div>
 
@@ -196,6 +201,11 @@ export default function IsopanelBudget() {
                   >
                     Pedir presupuesto por WhatsApp
                   </a>
+
+                  {/* ✅ VISITA PAGA (lugar ideal + framing correcto) */}
+                  <p className="text-center text-xs text-slate-500">
+                    La visita técnica tiene costo y <strong>se descuenta</strong> del presupuesto final si avanzamos con la obra.
+                  </p>
 
                   <details className="rounded-2xl bg-slate-50 p-4">
                     <summary className="cursor-pointer text-sm font-semibold text-slate-900">
