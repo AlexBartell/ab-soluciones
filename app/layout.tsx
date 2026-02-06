@@ -19,27 +19,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VQV08MXH2Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <html lang="es">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-VQV08MXH2Q"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-VQV08MXH2Q');
+          `}
+        </Script>
 
-  gtag('config', 'G-VQV08MXH2Q');
-</script>
         {children}
       </body>
     </html>
