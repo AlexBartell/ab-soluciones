@@ -66,7 +66,7 @@ export default function Hero() {
 
                 {/* CTA: en mobile queda abajo con buen aire; en desktop igual */}
                 <a
-                  href="https://wa.me/598XXXXXXXX"
+                  href="https://wa.me/59895408688"
                   target="_blank"
                   rel="noreferrer"
                   className="mt-7 inline-flex items-center gap-3 rounded-xl bg-green-500 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-black/20 hover:bg-green-600 transition"

@@ -189,7 +189,7 @@ export default function IsopanelBudget() {
                   </div>
 
                   <a
-                    href={`https://wa.me/598XXXXXXXX?text=${waText}`}
+                    href={`https://wa.me/59895408688?text=${waText}`}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white hover:bg-green-600 transition"

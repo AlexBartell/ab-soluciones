@@ -37,7 +37,7 @@ export default function Header() {
 
         {/* CTA */}
         <a
-          href="https://wa.me/598XXXXXXXX"
+          href="https://wa.me/59895408688"
           target="_blank"
           rel="noreferrer"
           className="
