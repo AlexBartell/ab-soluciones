@@ -12,14 +12,14 @@ export default function Footer() {
 
           <div>
             <p className="text-sm font-semibold">Contacto</p>
-            <p className="mt-2 text-sm text-slate-600">WhatsApp: +598 ...</p>
+            <p className="mt-2 text-sm text-slate-600">WhatsApp: 095408688 </p>
             <p className="text-sm text-slate-600">Zona: Montevideo y alrededores</p>
           </div>
 
           <div>
             <p className="text-sm font-semibold">Horario</p>
             <p className="mt-2 text-sm text-slate-600">
-              Lun a Sáb · 9:00 a 19:00
+              Lun a Viernes · 9:00 a 17:00
             </p>
           </div>
         </div>
