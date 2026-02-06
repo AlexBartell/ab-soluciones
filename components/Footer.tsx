@@ -23,6 +23,9 @@ export default function Footer() {
             </p>
           </div>
         </div>
+<a href="/privacidad" className="text-xs text-slate-500 hover:text-slate-700">
+  Política de privacidad
+</a>
 
         <p className="mt-8 text-xs text-slate-500">
           © {new Date().getFullYear()} MOD Soluciones. Todos los derechos reservados.
