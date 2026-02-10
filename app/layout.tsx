@@ -27,26 +27,22 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Google tag (gtag.js) */}
+        {/* Google tag (gtag.js) - sirve para GA4 y Google Ads */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-VQV08MXH2Q"
           strategy="afterInteractive"
         />
-        <Script id="ga4" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+
             gtag('js', new Date());
             gtag('config', 'G-VQV08MXH2Q');
+            // Si tenés Google Ads, también podés configurar el AW acá:
+            // gtag('config', 'AW-17925960053');
           `}
-
-<Script>
-  gtag('event', 'conversion', {
-      'send_to': 'AW-17925960053/XZuOCO26t_YbEPXi4eNC',
-      'value': 1.0,
-      'currency': 'USD'
-  });
-
         </Script>
 
         {children}
