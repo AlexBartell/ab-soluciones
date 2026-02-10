@@ -85,7 +85,7 @@ export default function IsopanelBudget() {
         {/* IZQ */}
         <div>
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Calculá un estimado en 20 segundos
+            Calculá un estimado en 20 segundos - ISOPANEL de 10cm espesor
           </h2>
 
           <p className="mt-3 text-slate-600 md:text-lg">

@@ -39,6 +39,14 @@ export default function RootLayout({
             gtag('js', new Date());
             gtag('config', 'G-VQV08MXH2Q');
           `}
+
+<Script>
+  gtag('event', 'conversion', {
+      'send_to': 'AW-17925960053/XZuOCO26t_YbEPXi4eNC',
+      'value': 1.0,
+      'currency': 'USD'
+  });
+
         </Script>
 
         {children}
