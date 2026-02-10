@@ -2,10 +2,19 @@
 
 import { useMemo, useState } from "react";
 
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export default function IsopanelBudget() {
   const PANEL_WIDTH = 1.14; // m
   const PRICE_PER_M2 = 90; // USD
   const EXTRA_CANAL_MULT = 1.2; // +20%
+
+  // ✅ Google Ads conversion (solo para este CTA)
+  const ADS_SEND_TO = "AW-17925960053/XZuOCO26t_YbEPXi4eNC";
 
   const [anchoCaida, setAnchoCaida] = useState<string>(""); // dirección caída
   const [largoPerp, setLargoPerp] = useState<string>(""); // perpendicular a caída (define cantidad de paneles)
@@ -78,6 +87,21 @@ export default function IsopanelBudget() {
         `¿Podemos coordinar una visita?`
     );
   }, [anchoCaida, largoPerp, conCanaleta, calc.valid, calc.total]);
+
+  // ✅ Dispara conversión SOLO acá (lead caliente)
+  const handleWhatsappClick = () => {
+    try {
+      if (typeof window !== "undefined" && typeof window.gtag === "function") {
+        window.gtag("event", "conversion", {
+          send_to: ADS_SEND_TO,
+          value: 1.0,
+          currency: "USD",
+        });
+      }
+    } catch {
+      // no-op
+    }
+  };
 
   return (
     <section id="presupuesto" className="mx-auto max-w-6xl px-5 py-14 md:py-16">
@@ -193,16 +217,18 @@ export default function IsopanelBudget() {
                     </p>
                   </div>
 
+                  {/* ✅ CTA con conversión Google Ads */}
                   <a
                     href={`https://wa.me/59895408688?text=${waText}`}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={handleWhatsappClick}
                     className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white hover:bg-green-600 transition"
                   >
                     Pedir presupuesto por WhatsApp
                   </a>
 
-                  {/* ✅ VISITA PAGA (lugar ideal + framing correcto) */}
+                  {/* ✅ VISITA PAGA */}
                   <p className="text-center text-xs text-slate-500">
                     La visita técnica tiene costo y <strong>se descuenta</strong> del presupuesto final si avanzamos con la obra.
                   </p>
