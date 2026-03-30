@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 declare global {
   interface Window {
@@ -9,59 +9,52 @@ declare global {
 }
 
 export default function IsopanelBudget() {
-  const PANEL_WIDTH = 1.14; // m
-  const PRICE_PER_M2 = 90; // USD
-  const EXTRA_CANAL_MULT = 1.2; // +20%
+  const PANEL_WIDTH = 1.14;
+  const PRICE_PER_M2 = 130;
+  const EXTRA_CANAL_MULT = 1.2;
 
-  // ✅ Google Ads conversion (solo para este CTA)
   const ADS_SEND_TO = "AW-17925960053/XZuOCO26t_YbEPXi4eNC";
 
-  const [anchoCaida, setAnchoCaida] = useState<string>(""); // dirección caída
-  const [largoPerp, setLargoPerp] = useState<string>(""); // perpendicular a caída (define cantidad de paneles)
-  const [conCanaleta, setConCanaleta] = useState<boolean>(false);
+  const [anchoCaida, setAnchoCaida] = useState("");
+  const [largoPerp, setLargoPerp] = useState("");
+  const [conCanaleta, setConCanaleta] = useState(false);
+
+  const resultRef = useRef<HTMLDivElement | null>(null);
+  const lastTrackedKey = useRef<string>("");
 
   const calc = useMemo(() => {
     const ancho = parseFloat(anchoCaida);
     const largo = parseFloat(largoPerp);
 
     const valid =
-      Number.isFinite(ancho) && Number.isFinite(largo) && ancho > 0 && largo > 0;
+      Number.isFinite(ancho) &&
+      Number.isFinite(largo) &&
+      ancho > 0 &&
+      largo > 0;
 
     if (!valid) {
       return {
         valid: false,
         paneles: 0,
         largoReal: 0,
-        m2Geometricos: 0,
         m2Reales: 0,
-        base: 0,
         total: 0,
-        mult: conCanaleta ? EXTRA_CANAL_MULT : 1,
       };
     }
 
-    // ✅ La cantidad de paneles la define el LARGO (perpendicular a la caída)
     const paneles = Math.ceil(largo / PANEL_WIDTH);
     const largoReal = paneles * PANEL_WIDTH;
-
-    const m2Geometricos = ancho * largo;
-
-    // ✅ m² reales = largo real cubierto * ancho (caída)
     const m2Reales = largoReal * ancho;
 
     const base = m2Reales * PRICE_PER_M2;
-    const mult = conCanaleta ? EXTRA_CANAL_MULT : 1;
-    const total = base * mult;
+    const total = conCanaleta ? base * EXTRA_CANAL_MULT : base;
 
     return {
       valid: true,
       paneles,
       largoReal,
-      m2Geometricos,
       m2Reales,
-      base,
       total,
-      mult,
     };
   }, [anchoCaida, largoPerp, conCanaleta]);
 
@@ -73,68 +66,163 @@ export default function IsopanelBudget() {
     }).format(n);
 
   const waText = useMemo(() => {
-    const ancho = anchoCaida?.trim();
-    const largo = largoPerp?.trim();
+    const ancho = anchoCaida || "-";
+    const largo = largoPerp || "-";
     const canal = conCanaleta ? "Sí" : "No";
     const total = calc.valid ? money(calc.total) : "";
 
     return encodeURIComponent(
       `Hola! Quiero presupuesto para techo de isopanel.\n` +
-        `Ancho (dirección de la caída): ${ancho || "-"} m\n` +
-        `Largo (perpendicular a la caída): ${largo || "-"} m\n` +
-        `Canaleta/desagüe: ${canal}\n` +
+        `Ancho: ${ancho} m\n` +
+        `Largo: ${largo} m\n` +
+        `Canaleta: ${canal}\n` +
         (total ? `Estimación web: ${total}\n` : "") +
-        `¿Podemos coordinar una visita?`
+        `¿Podemos coordinar una visita técnica?`
     );
   }, [anchoCaida, largoPerp, conCanaleta, calc.valid, calc.total]);
 
-  // ✅ Dispara conversión SOLO acá (lead caliente)
-  const handleWhatsappClick = () => {
+  const fireGtagEvent = (eventName: string, params?: Record<string, any>) => {
     try {
       if (typeof window !== "undefined" && typeof window.gtag === "function") {
-        window.gtag("event", "conversion", {
-          send_to: ADS_SEND_TO,
-          value: 1.0,
-          currency: "USD",
-        });
+        window.gtag("event", eventName, params || {});
       }
     } catch {
       // no-op
     }
   };
 
+  const handleWhatsappClick = () => {
+    fireGtagEvent("whatsapp_click", {
+      section: "isopanel_budget",
+      has_estimate: calc.valid,
+      estimated_value: calc.valid ? Math.round(calc.total) : undefined,
+      canaleta: conCanaleta ? "si" : "no",
+    });
+
+    fireGtagEvent("conversion", {
+      send_to: ADS_SEND_TO,
+      value: 1.0,
+      currency: "USD",
+    });
+  };
+
+  useEffect(() => {
+    if (!calc.valid) return;
+
+    const key = `${anchoCaida}-${largoPerp}-${conCanaleta}-${Math.round(
+      calc.total
+    )}`;
+
+    if (lastTrackedKey.current === key) return;
+    lastTrackedKey.current = key;
+
+    fireGtagEvent("budget_calculated", {
+      section: "isopanel_budget",
+      estimated_value: Math.round(calc.total),
+      paneles: calc.paneles,
+      m2_material: Number(calc.m2Reales.toFixed(2)),
+      canaleta: conCanaleta ? "si" : "no",
+    });
+
+    const isMobile =
+      typeof window !== "undefined" && window.innerWidth < 768;
+
+    if (isMobile && resultRef.current) {
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 150);
+    }
+  }, [
+    calc.valid,
+    calc.total,
+    calc.paneles,
+    calc.m2Reales,
+    anchoCaida,
+    largoPerp,
+    conCanaleta,
+  ]);
+
   return (
     <section id="presupuesto" className="mx-auto max-w-6xl px-5 py-14 md:py-16">
       <div className="grid gap-8 md:grid-cols-2 md:items-start">
-        {/* IZQ */}
+        {/* IZQUIERDA */}
         <div>
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Calculá un estimado en 20 segundos - ISOPANEL de 10cm espesor
+            Calculá el precio estimado de tu techo de isopanel
           </h2>
 
           <p className="mt-3 text-slate-600 md:text-lg">
-            Poné las medidas y te mostramos un <strong>precio orientativo</strong>. Si te sirve,
-            nos escribís por WhatsApp y te pasamos el presupuesto final.
+            Ingresá las medidas y obtené una <strong>estimación inmediata</strong>.
+            Si te sirve, nos escribís por WhatsApp y coordinamos una visita técnica.
           </p>
 
-          <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <div className="mt-6">
+            <a
+              href="https://wa.me/59895408688?text=Hola%20quiero%20presupuesto%20para%20techo%20de%20isopanel"
+              target="_blank"
+              rel="noreferrer"
+              onClick={handleWhatsappClick}
+              className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600 sm:w-auto"
+            >
+              📲 Enviar medidas por WhatsApp
+            </a>
+
+            <p className="mt-2 text-sm text-slate-500">Respuesta rápida</p>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
             <p className="text-sm font-semibold text-slate-900">Cómo medir</p>
             <p className="mt-2 text-sm text-slate-700">
-              <strong>Ancho</strong> = dirección de la caída. <br />
+              <strong>Ancho</strong> = dirección de la caída.
+              <br />
               <strong>Largo</strong> = perpendicular a la caída.
-            </p>
-
-            <p className="mt-3 text-xs text-slate-500">
-              Base: <strong>{PRICE_PER_M2} USD/m²</strong> (material + colocación, estimado).
             </p>
           </div>
 
-          <p className="mt-4 text-sm text-slate-600">
-            ¿Tenés dudas con la medida? Igual escribinos y te guiamos en 1 minuto.
-          </p>
+          <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              MOD Soluciones
+            </p>
+            <h3 className="mt-2 text-xl font-bold text-slate-900">
+              Instalación profesional de techos de isopanel
+            </h3>
+            <p className="mt-1 text-sm text-slate-600">
+              En Montevideo y zona metropolitana
+            </p>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+              <h3 className="text-base font-semibold text-slate-900">
+                Por qué elegirnos
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                <li>✔ Isopanel de 10 cm de espesor</li>
+                <li>✔ Instalación profesional</li>
+                <li>✔ Garantía de instalación</li>
+                <li>✔ Sellado y terminaciones</li>
+                <li>✔ Asesoramiento en obra</li>
+              </ul>
+            </div>
+
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+              <h3 className="text-base font-semibold text-slate-900">
+                Cómo trabajamos
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                <li>1️⃣ Calculás una estimación online</li>
+                <li>2️⃣ Coordinamos visita técnica</li>
+                <li>3️⃣ Confirmamos presupuesto final</li>
+                <li>4️⃣ Instalamos el techo</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        {/* DER */}
+        {/* DERECHA */}
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7">
           <div className="grid gap-5">
             <div>
@@ -167,7 +255,6 @@ export default function IsopanelBudget() {
               />
             </div>
 
-            {/* Toggle canaleta */}
             <button
               type="button"
               onClick={() => setConCanaleta((v) => !v)}
@@ -182,7 +269,9 @@ export default function IsopanelBudget() {
                 <p className="text-sm font-semibold text-slate-900">
                   Agregar canaleta / desagüe
                 </p>
-                <p className="text-xs text-slate-600">+20% por materiales extra</p>
+                <p className="text-xs text-slate-600">
+                  Incluye materiales adicionales
+                </p>
               </div>
 
               <div
@@ -198,8 +287,10 @@ export default function IsopanelBudget() {
               </div>
             </button>
 
-            {/* Resultado */}
-            <div className="rounded-2xl border border-slate-200 p-5">
+            <div
+              ref={resultRef}
+              className="rounded-2xl border border-slate-200 p-5"
+            >
               {!calc.valid ? (
                 <p className="text-sm text-slate-600">
                   Ingresá ancho y largo para ver el total.
@@ -211,26 +302,28 @@ export default function IsopanelBudget() {
                       Total estimado{" "}
                       {conCanaleta ? "(incluye canaleta/desagüe)" : ""}
                     </p>
-                    <p className="mt-1 text-3xl font-semibold">{money(calc.total)}</p>
+                    <p className="mt-1 text-3xl font-semibold">
+                      {money(calc.total)}
+                    </p>
                     <p className="mt-2 text-xs text-white/70">
-                      Orientativo. El final se confirma con visita técnica.
+                      Valor orientativo. El presupuesto final se confirma con
+                      visita técnica.
                     </p>
                   </div>
 
-                  {/* ✅ CTA con conversión Google Ads */}
                   <a
                     href={`https://wa.me/59895408688?text=${waText}`}
                     target="_blank"
                     rel="noreferrer"
                     onClick={handleWhatsappClick}
-                    className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white hover:bg-green-600 transition"
+                    className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600"
                   >
-                    Pedir presupuesto por WhatsApp
+                    📲 Enviar medidas por WhatsApp
                   </a>
 
-                  {/* ✅ VISITA PAGA */}
                   <p className="text-center text-xs text-slate-500">
-                    La visita técnica tiene costo y <strong>se descuenta</strong> del presupuesto final si avanzamos con la obra.
+                    La visita técnica tiene costo y <strong>se descuenta</strong>{" "}
+                    del presupuesto final si avanzamos con la obra.
                   </p>
 
                   <details className="rounded-2xl bg-slate-50 p-4">
@@ -240,22 +333,19 @@ export default function IsopanelBudget() {
 
                     <div className="mt-3 space-y-1 text-sm text-slate-700">
                       <p>
-                        m² del techo: <strong>{calc.m2Geometricos.toFixed(2)} m²</strong>
-                      </p>
-                      <p>
                         Paneles necesarios: <strong>{calc.paneles}</strong>
                       </p>
                       <p>
-                        Largo real cubierto: <strong>{calc.largoReal.toFixed(2)} m</strong>
+                        Largo real cubierto:{" "}
+                        <strong>{calc.largoReal.toFixed(2)} m</strong>
                       </p>
                       <p>
-                        m² de material: <strong>{calc.m2Reales.toFixed(2)} m²</strong>
+                        m² de material:{" "}
+                        <strong>{calc.m2Reales.toFixed(2)} m²</strong>
                       </p>
                       <p className="pt-2 text-xs text-slate-500">
-                        Se calcula con paneles de 1,14 m y se redondea a panel completo.
-                      </p>
-                      <p className="text-xs text-slate-500">
-                        Base: {money(calc.base)} {conCanaleta ? `× ${calc.mult}` : ""}
+                        Se calcula con paneles de 1,14 m y se redondea a panel
+                        completo.
                       </p>
                     </div>
                   </details>
@@ -264,7 +354,8 @@ export default function IsopanelBudget() {
             </div>
 
             <p className="text-xs text-slate-500">
-              * Valor orientativo. El presupuesto final se confirma según estructura, remates y terminaciones.
+              * El precio final puede variar según estructura, remates y
+              condiciones del techo.
             </p>
           </div>
         </div>
