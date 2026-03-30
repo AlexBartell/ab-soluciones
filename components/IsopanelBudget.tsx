@@ -167,10 +167,12 @@ export default function IsopanelBudget() {
               onClick={handleWhatsappClick}
               className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600 sm:w-auto"
             >
-              📲 Enviar medidas por WhatsApp
+              📲 Quiero mi presupuesto por WhatsApp
             </a>
 
-            <p className="mt-2 text-sm text-slate-500">Respuesta rápida</p>
+            <p className="mt-2 text-sm text-slate-500">
+              Te respondemos rápido y coordinamos visita técnica.
+            </p>
           </div>
 
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
@@ -318,7 +320,7 @@ export default function IsopanelBudget() {
                     onClick={handleWhatsappClick}
                     className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600"
                   >
-                    📲 Enviar medidas por WhatsApp
+                    📲 Quiero mi presupuesto por WhatsApp
                   </a>
 
                   <p className="text-center text-xs text-slate-500">
