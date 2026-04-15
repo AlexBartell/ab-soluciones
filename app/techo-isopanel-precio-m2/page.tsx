@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import IsopanelBudget from "@/components/IsopanelBudget";
+import IsopanelBudgett from "@/components/IsopanelBudgett";
 import Projects from "@/components/Projects";
 import WhyUs from "@/components/WhyUs";
 import Link from "next/link";
@@ -80,7 +80,7 @@ export default function PrecioTechoIsopanelPage() {
         </div>
       </section>
 
-      <IsopanelBudget />
+      <IsopanelBudgett />
 
       <section className="border-t border-slate-200 bg-slate-50">
         <div className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-16">
