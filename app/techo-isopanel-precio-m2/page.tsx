@@ -30,8 +30,7 @@ export default function PrecioTechoIsopanelPage() {
             </h1>
 
             <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600 md:text-xl">
-              Instalación profesional de techos de isopanel con remates bien
-              resueltos, fijaciones adecuadas y garantía de instalación.
+             Instalación profesional de techos de isopanel con remates y sellado de calidad, fijaciones estructurales y garantía de instalación.
             </p>
 
             <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600 md:text-lg">
@@ -67,7 +66,7 @@ export default function PrecioTechoIsopanelPage() {
                 Instalación profesional
               </span>
               <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Remates bien resueltos
+                Remates y sellado de calidad
               </span>
               <span className="rounded-full bg-slate-100 px-3 py-1.5">
                 Garantía de instalación
@@ -257,7 +256,7 @@ export default function PrecioTechoIsopanelPage() {
                   Instalación de techo de isopanel con criterio técnico.
                 </li>
                 <li className="rounded-2xl border border-slate-200 p-5">
-                  Fijaciones adecuadas según el tipo de estructura.
+                  Fijaciones según el tipo de estructura.
                 </li>
                 <li className="rounded-2xl border border-slate-200 p-5">
                   Remates y sellados según las necesidades de la obra.
