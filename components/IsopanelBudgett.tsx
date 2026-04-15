@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 declare global {
@@ -25,7 +26,6 @@ export default function IsopanelBudgett() {
   const [showResult, setShowResult] = useState(false);
 
   const resultRef = useRef<HTMLDivElement | null>(null);
-  const lastTrackedKey = useRef<string>("");
 
   const pricePerM2 = tipoInstalacion === "basica" ? 105 : 130;
 
@@ -167,8 +167,85 @@ export default function IsopanelBudgett() {
   }, [anchoCaida, largoPerp, conCanaleta, tipoInstalacion]);
 
   return (
-    <section id="presupuesto" className="mx-auto max-w-6xl px-5 py-14 md:py-16">
-      <div className="grid gap-8 md:grid-cols-2 md:items-start">
+    <section className="mx-auto max-w-6xl px-5 py-10 md:py-14">
+      {/* HERO */}
+      <div className="mb-12 grid gap-10 md:grid-cols-2 md:items-center md:gap-12">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500">
+            MOD Soluciones
+          </p>
+
+          <h1 className="mt-3 max-w-[14ch] text-4xl font-bold leading-tight tracking-tight text-slate-900 md:max-w-[15ch] md:text-6xl">
+            Techo de isopanel: precio por m² instalado en Montevideo
+          </h1>
+
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 md:text-xl">
+            Instalación profesional de techos de isopanel con remates y sellado de calidad,
+            fijaciones estructurales y garantía de instalación.
+          </p>
+
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
+            Valores orientativos entre <strong>USD 105 y USD 130 por m²</strong>,
+            según terminaciones, remates y condiciones de la obra.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#calculadora-isopanel"
+              className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 md:px-7 md:py-3.5 md:text-base"
+            >
+              Calcular precio estimado
+            </a>
+
+            <a
+              href="https://wa.me/59895408688?text=Hola%2C%20quiero%20presupuesto%20para%20techo%20de%20isopanel"
+              target="_blank"
+              rel="noreferrer"
+              onClick={handleWhatsappClick}
+              className="inline-flex items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-600 md:px-7 md:py-3.5 md:text-base"
+            >
+              Pedir presupuesto por WhatsApp
+            </a>
+          </div>
+
+          <p className="mt-3 text-xs text-slate-500 md:text-sm">
+            Si se requiere visita técnica, su costo se descuenta del total al contratar.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2 text-xs text-slate-600 md:text-sm">
+            <span className="rounded-full bg-slate-100 px-3 py-1.5">
+              Instalación profesional
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1.5">
+              Remates y sellado de calidad
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1.5">
+              Garantía de instalación
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1.5">
+              Montevideo y zona metropolitana
+            </span>
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-100 shadow-sm">
+          <div className="relative aspect-[16/10] w-full">
+            <Image
+              src="/imagenes/isopanel-obra.jpg"
+              alt="Instalación de techo de isopanel en Montevideo"
+              fill
+              priority
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* BLOQUE TEXTO + CALCULADORA */}
+      <div
+        id="calculadora-isopanel"
+        className="grid gap-8 md:grid-cols-2 md:items-start"
+      >
         <div>
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
             Calculá el precio de tu techo de isopanel por m²
@@ -179,22 +256,6 @@ export default function IsopanelBudgett() {
             <strong>estimación inmediata</strong>. Después, si te sirve, nos
             escribís por WhatsApp y coordinamos una visita técnica.
           </p>
-
-          <div className="mt-6">
-            <a
-              href="https://wa.me/59895408688?text=Hola%20quiero%20presupuesto%20para%20techo%20de%20isopanel"
-              target="_blank"
-              rel="noreferrer"
-              onClick={handleWhatsappClick}
-              className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600 sm:w-auto"
-            >
-              📲 Quiero mi presupuesto por WhatsApp
-            </a>
-
-            <p className="mt-2 text-sm text-slate-500">
-              Te respondemos rápido y coordinamos visita técnica.
-            </p>
-          </div>
 
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
             <p className="text-sm font-semibold text-slate-900">Cómo medir</p>
@@ -239,7 +300,8 @@ export default function IsopanelBudgett() {
                 <li>1️⃣ Calculás una estimación online</li>
                 <li>2️⃣ Coordinamos visita técnica</li>
                 <li>3️⃣ Confirmamos presupuesto final</li>
-                <li>4️⃣ Instalamos el techo</li>
+                <li>4️⃣ Definimos alcance y contrato</li>
+                <li>5️⃣ Instalamos el techo</li>
               </ul>
             </div>
           </div>

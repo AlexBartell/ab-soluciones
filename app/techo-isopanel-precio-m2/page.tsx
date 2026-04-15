@@ -17,68 +17,6 @@ export default function PrecioTechoIsopanelPage() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       <Header />
-
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-20">
-          <div className="max-w-4xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500">
-              MOD Soluciones
-            </p>
-
-            <h1 className="mt-3 max-w-[15ch] text-4xl font-bold leading-tight tracking-tight text-slate-900 md:text-6xl">
-              Techo de isopanel: precio por m² instalado en Montevideo
-            </h1>
-
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600 md:text-xl">
-             Instalación profesional de techos de isopanel con remates y sellado de calidad, fijaciones estructurales y garantía de instalación.
-            </p>
-
-            <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600 md:text-lg">
-              Valores orientativos entre <strong>USD 105 y USD 130 por m²</strong>,
-              según terminaciones, remates y condiciones de la obra.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#presupuesto"
-                className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 md:px-7 md:py-3.5 md:text-base"
-              >
-                Calcular precio estimado
-              </a>
-
-              <a
-                href="https://wa.me/59895408688?text=Hola%2C%20quiero%20presupuesto%20para%20techo%20de%20isopanel"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-3 rounded-2xl bg-green-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-600 md:px-7 md:py-3.5 md:text-base"
-              >
-                <FaWhatsapp size={20} />
-                Pedir presupuesto por WhatsApp
-              </a>
-            </div>
-
-            <p className="mt-3 text-xs text-slate-500 md:text-sm">
-              Si se requiere visita técnica, su costo se descuenta del total al contratar.
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-2 text-xs text-slate-600 md:text-sm">
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Instalación profesional
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Remates y sellado de calidad
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Garantía de instalación
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Montevideo y zona metropolitana
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <IsopanelBudgett />
 
       <section className="border-t border-slate-200 bg-slate-50">
