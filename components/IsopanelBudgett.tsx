@@ -309,14 +309,6 @@ export default function IsopanelBudgett() {
 
       </div>
 
-      <Image
-              src="imagenes/isopanel-obra.jpg"
-              alt="Instalación de techo de isopanel en Montevideo"
-              fill
-              priority
-              className="object-cover"
-            />
-          
       <div className="mb-12 overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-100 shadow-sm">
         <div className="relative aspect-[16/9] w-full">
           <Image
