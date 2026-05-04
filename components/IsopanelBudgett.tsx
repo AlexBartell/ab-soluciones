@@ -215,7 +215,7 @@ export default function IsopanelBudgett() {
   return (
     <>
       <section className="relative w-full overflow-hidden">
-  <div className="relative min-h-[560px] md:h-[620px]">
+  <div className="relative min-h-[540px] md:h-[620px]">
     {/* Background desktop */}
     <Image
       src="/imagenes/unnamed.jpg"
@@ -238,25 +238,13 @@ export default function IsopanelBudgett() {
     <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/70 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent" />
 
     {/* Contenido */}
-    <div className="relative z-10 mx-auto max-w-6xl px-5 py-8 sm:px-6 md:flex md:h-[620px] md:items-center md:py-0">
+    <div className="relative z-10 mx-auto max-w-6xl px-5 py-9 sm:px-6 md:flex md:h-[620px] md:items-center md:py-0">
       <div className="max-w-3xl text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-        {/* Logo solo mobile */}
-        <div className="mb-5 w-[62%] max-w-[270px] md:hidden">
-          <Image
-            src="/imagenes/logo1.png"
-            alt="MOD Soluciones"
-            width={520}
-            height={180}
-            className="h-auto w-full"
-            priority
-          />
-        </div>
-
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80 md:text-sm">
           Montevideo y zona metropolitana
         </p>
 
-        <h1 className="mt-3 max-w-[13ch] text-[clamp(34px,11vw,48px)] font-bold leading-[1.02] tracking-[-0.04em] md:max-w-[16ch] md:text-[clamp(48px,6.4vw,70px)]">
+        <h1 className="mt-3 max-w-[13ch] text-[clamp(36px,11vw,52px)] font-bold leading-[1.02] tracking-[-0.04em] md:max-w-[16ch] md:text-[clamp(48px,6.4vw,70px)]">
           Techo de isopanel desde USD {PRICE_PER_M2}/m²
         </h1>
 
