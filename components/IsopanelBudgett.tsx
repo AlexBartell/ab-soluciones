@@ -11,7 +11,7 @@ declare global {
 export default function IsopanelBudgett() {
   const PANEL_WIDTH = 1.14;
   const EXTRA_CANAL_MULT = 1.2;
-  const PRICE_PER_M2 = 120;
+  const PRICE_PER_M2 = 99;
 
   const ADS_SEND_TO = "AW-17925960053/XZuOCO26t_YbEPXi4eNC";
 
@@ -80,7 +80,7 @@ export default function IsopanelBudgett() {
         `Ancho: ${ancho} m\n` +
         `Largo: ${largo} m\n` +
         `Canaleta / desagüe: ${canal}\n` +
-        `Precio orientativo por m² instalado: USD ${PRICE_PER_M2}\n` +
+        `Precio orientativo desde: USD ${PRICE_PER_M2}/m² instalado\n` +
         (total ? `Estimación web: ${total}\n` : "") +
         `¿Podemos coordinar una visita técnica?`
     );
@@ -145,7 +145,7 @@ export default function IsopanelBudgett() {
   }, [anchoCaida, largoPerp, conCanaleta]);
 
   return (
-    <section className="mx-auto max-w-6xl px-5 py-10 md:py-14">
+    <section className="mx-auto max-w-6xl px-5 py-8 md:py-14">
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
         {/* COLUMNA IZQUIERDA */}
         <div>
@@ -157,54 +157,50 @@ export default function IsopanelBudgett() {
             Precio de techo de isopanel por m² en Montevideo y zona metropolitana
           </h1>
 
-          {/* BLOQUE DE IMPACTO */}
-          <div className="mt-6 max-w-2xl rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm md:p-6">
+          {/* PRECIO PRINCIPAL */}
+          <div className="mt-5 max-w-2xl rounded-3xl border border-emerald-200 bg-emerald-50 p-5 shadow-sm md:p-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-emerald-700">
+              Precio de lanzamiento
+            </p>
+
+            <p className="mt-2 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
+              Desde USD {PRICE_PER_M2}
+              <span className="text-xl font-semibold text-slate-600">
+                {" "}
+                / m² instalado
+              </span>
+            </p>
+
+            <p className="mt-3 text-sm leading-6 text-slate-700 md:text-base">
+              Valor orientativo para obras simples. El precio final puede variar
+              según estructura, altura, remates, canaletas y condiciones reales
+              del techo.
+            </p>
+          </div>
+
+          {/* BLOQUE EMOCIONAL CORTO */}
+          <div className="mt-5 max-w-2xl rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm md:p-6">
             <p className="text-sm font-semibold uppercase tracking-[0.14em] text-red-600">
               Antes de comparar solo por precio
             </p>
 
             <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-slate-900 md:text-3xl">
-              En un techo de isopanel, lo caro no es hacerlo bien. Lo caro es
-              pagarlo dos veces.
+              Lo caro no es hacerlo bien. Lo caro es pagarlo dos veces.
             </h2>
 
             <p className="mt-4 text-base leading-7 text-slate-700 md:text-lg">
-              Muchas consultas nos llegan después de instalaciones baratas o sin
-              garantía que terminaron con filtraciones, humedad, ruidos con el
-              viento o encuentros mal resueltos.
-            </p>
-
-            <p className="mt-3 text-base leading-7 text-slate-700 md:text-lg">
               El panel puede ser bueno, pero si falla la instalación, falla el
               techo.
             </p>
 
-            <div className="mt-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
-              <p className="text-base leading-7 text-slate-800 md:text-lg">
-                <strong>Nuestra solución:</strong> una instalación completa con
-                criterio técnico, fijaciones firmes, encuentros protegidos contra
-                filtraciones y garantía de instalación.
-              </p>
-            </div>
-
-            <p className="mt-4 text-base font-semibold leading-7 text-slate-900 md:text-lg">
-              En MOD Soluciones creemos que el ahorro real no está en elegir el
-              precio más bajo hoy, sino en evitar reparaciones mañana.
-            </p>
-
             <p className="mt-3 text-base leading-7 text-slate-700 md:text-lg">
-              La idea es que inviertas una vez en un techo bien resuelto, con una
-              solución técnica pensada para durar décadas.
+              Trabajamos techos de isopanel completos, con criterio técnico,
+              fijaciones firmes, encuentros protegidos contra filtraciones y
+              garantía de instalación.
             </p>
           </div>
 
-          <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
-            Valor orientativo de instalación completa:{" "}
-            <strong>USD {PRICE_PER_M2} por m²</strong>, sujeto a medidas,
-            estructura, altura, canaletas y condiciones reales de la obra.
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-7 flex flex-wrap gap-3">
             <a
               href="#calculadora-isopanel"
               className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 md:px-7 md:py-3.5 md:text-base"
@@ -219,7 +215,7 @@ export default function IsopanelBudgett() {
               onClick={handleWhatsappClick}
               className="inline-flex items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-green-600 md:px-7 md:py-3.5 md:text-base"
             >
-              Hablar por WhatsApp
+              Coordinar por WhatsApp
             </a>
           </div>
 
@@ -306,23 +302,24 @@ export default function IsopanelBudgett() {
           <div className="grid gap-5">
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
               <p className="text-sm font-semibold text-slate-900">
-                Instalación completa de techo de isopanel
+                Calculadora de techo de isopanel instalado
               </p>
 
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Cálculo orientativo con instalación incluida, criterio técnico,
-                fijaciones firmes, encuentros protegidos y garantía de instalación.
+                Estimación base para instalación simple con techo de isopanel.
+                El precio final se confirma según las condiciones reales de la
+                obra.
               </p>
 
               <div className="mt-4 rounded-2xl bg-white p-4 shadow-sm">
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Valor orientativo
+                  Desde
                 </p>
                 <p className="mt-1 text-3xl font-bold text-slate-900">
                   USD {PRICE_PER_M2}
                   <span className="text-base font-semibold text-slate-500">
                     {" "}
-                    / m²
+                    / m² instalado
                   </span>
                 </p>
               </div>
@@ -415,23 +412,27 @@ export default function IsopanelBudgett() {
               ) : (
                 <div className="space-y-4">
                   <div className="rounded-2xl bg-slate-900 p-5 text-white">
-                    <p className="text-xs text-white/80">Inversión estimada</p>
+                    <p className="text-xs text-white/80">
+                      Estimación orientativa
+                    </p>
                     <p className="mt-1 text-3xl font-semibold">
                       {money(calc.total)}
                     </p>
 
                     <p className="mt-3 text-sm text-white/85">
-                      Instalación completa
+                      Instalación base
                       {conCanaleta ? " + canaleta / desagüe" : ""}
                     </p>
 
                     <p className="mt-2 text-xs text-white/70">
-                      Precio orientativo por m² instalado: USD {PRICE_PER_M2}
+                      Precio desde USD {PRICE_PER_M2}/m² instalado para obras
+                      simples.
                     </p>
 
                     <p className="mt-2 text-xs text-white/70">
-                      Valor orientativo. El presupuesto final se confirma con
-                      visita técnica.
+                      El presupuesto final se confirma con visita técnica según
+                      estructura, remates, altura, canaletas y condiciones reales
+                      del techo.
                     </p>
                   </div>
 
@@ -442,7 +443,7 @@ export default function IsopanelBudgett() {
                     onClick={handleWhatsappClick}
                     className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600"
                   >
-                    📲 Enviar datos por WhatsApp
+                    📲 Confirmar este estimado por WhatsApp
                   </a>
 
                   <p className="text-center text-xs text-slate-500">
@@ -484,8 +485,9 @@ export default function IsopanelBudgett() {
             </div>
 
             <p className="text-xs text-slate-500">
-              * El precio final puede variar según estructura, remates, altura,
-              canaletas y condiciones del techo.
+              * Precio orientativo desde USD {PRICE_PER_M2}/m² para obras
+              simples. El valor final puede variar según estructura, remates,
+              altura, canaletas y condiciones del techo.
             </p>
           </div>
         </div>
