@@ -234,14 +234,14 @@ export default function IsopanelBudgett() {
       className="block object-cover object-[center_35%] md:hidden"
     />
 
-    {/* Overlay */}
+    {/* Overlay suave para legibilidad */}
     <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/70 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent" />
 
     {/* Contenido */}
     <div className="relative z-10 mx-auto max-w-6xl px-5 py-8 sm:px-6 md:flex md:h-[620px] md:items-center md:py-0">
       <div className="max-w-3xl text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-        {/* Logo */}
-        <div className="mb-5 w-[62%] max-w-[270px] md:mb-6 md:w-[340px] md:max-w-[420px]">
+        {/* Logo solo mobile */}
+        <div className="mb-5 w-[62%] max-w-[270px] md:hidden">
           <Image
             src="/imagenes/logo1.png"
             alt="MOD Soluciones"
@@ -294,7 +294,7 @@ export default function IsopanelBudgett() {
             <p className="mt-1 text-sm font-semibold text-white">
               Sellados y remates
             </p>
-            <p className="text-xs text-white/75">Terminación cuidada</p>
+            <p className="text-xs text-white/75">Sellados y encuentros</p>
           </div>
         </div>
 
