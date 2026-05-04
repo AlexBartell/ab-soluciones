@@ -8,12 +8,6 @@ const galleryProjects = [
     alt: "Trabajo realizado de techo de isopanel",
   },
   {
-    src: "imagen2.jpg",
-    title: "Techo terminado",
-    caption: "Obra real de techo liviano con paneles y remates perimetrales.",
-    alt: "Techo de isopanel terminado por MOD Soluciones",
-  },
-  {
     src: "01_techo_isopanel_terminado_cielo_azul.jpg",
     title: "Cubierta de isopanel",
     caption: "Paneles instalados sobre vivienda, con caída y terminaciones perimetrales.",
@@ -52,11 +46,22 @@ const processProjects = [
     caption: "Trabajo en obra sobre el frente del techo para resolver terminaciones visibles.",
     alt: "Operario trabajando en remate frontal de techo de isopanel",
   },
+];
+
+const wallReference = [
   {
-    src: "10_terminacion_lateral_muro.jpg",
-    title: "Encuentro contra muro",
-    caption: "Terminación lateral y encuentro contra muro para reducir puntos de filtración.",
-    alt: "Terminación lateral de techo de isopanel contra muro",
+    label: "Antes",
+    src: "muro_lateral_antes_revoque.jpg",
+    title: "Muro lateral antes del revoque",
+    caption: "Encuentro lateral con terminación pendiente y muro sin revoque final.",
+    alt: "Muro lateral antes del revoque y terminación final",
+  },
+  {
+    label: "Referencia",
+    src: "muro_lateral_despues_revoque_recortada.png",
+    title: "Referencia de terminación con revoque",
+    caption: "Ejemplo visual de cómo puede mejorar la presentación del encuentro lateral con muro revocado.",
+    alt: "Referencia visual de muro lateral terminado con revoque",
   },
 ];
 
@@ -112,6 +117,45 @@ function ProjectCard({ src, title, caption, alt, aspect = "h-64" }: ProjectCardP
   );
 }
 
+type BeforeAfterCardProps = {
+  label: string;
+  src: string;
+  title: string;
+  caption: string;
+  alt: string;
+  imageSizes?: string;
+};
+
+function BeforeAfterCard({
+  label,
+  src,
+  title,
+  caption,
+  alt,
+  imageSizes = "(max-width: 768px) 100vw, 33vw",
+}: BeforeAfterCardProps) {
+  return (
+    <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="relative h-60 bg-slate-100">
+        <Image
+          src={`/imagenes/${src}`}
+          alt={alt}
+          fill
+          className="object-cover"
+          sizes={imageSizes}
+        />
+        <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-900 shadow-sm">
+          {label}
+        </div>
+      </div>
+      <div className="p-4">
+        <h4 className="text-base font-semibold text-slate-900">{title}</h4>
+        <p className="mt-2 text-sm leading-6 text-slate-600">{caption}</p>
+      </div>
+    </article>
+  );
+}
+
 export default function Projects() {
   return (
     <section className="bg-slate-50 py-16">
@@ -150,9 +194,35 @@ export default function Projects() {
             </p>
           </div>
 
-          <div className="mt-7 grid gap-6 md:grid-cols-3">
+          <div className="mt-7 grid gap-6 md:grid-cols-2">
             {processProjects.map((project) => (
-              <ProjectCard key={project.src} {...project} aspect="h-52" />
+              <ProjectCard key={project.src} {...project} aspect="h-56" />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-7">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500">
+              Terminación lateral
+            </p>
+            <h3 className="mt-3 text-2xl font-bold tracking-tight text-slate-900">
+              Encuentro contra muro y referencia de revoque
+            </h3>
+            <p className="mt-4 text-base leading-7 text-slate-700">
+              En algunos trabajos, además del techo, puede convenir mejorar el encuentro
+              lateral contra muro para dejar una presentación más limpia. La imagen de
+              referencia muestra cómo puede verse una terminación con revoque.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {wallReference.map((item) => (
+              <BeforeAfterCard
+                key={`${item.label}-${item.src}`}
+                {...item}
+                imageSizes="(max-width: 768px) 100vw, 50vw"
+              />
             ))}
           </div>
         </div>
@@ -174,27 +244,7 @@ export default function Projects() {
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {beforeAfter.map((item) => (
-              <article
-                key={`${item.label}-${item.src}`}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
-              >
-                <div className="relative h-60 bg-slate-100">
-                  <Image
-                    src={`/imagenes/${item.src}`}
-                    alt={item.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-wide text-slate-900 shadow-sm">
-                    {item.label}
-                  </div>
-                </div>
-                <div className="p-4">
-                  <h4 className="text-base font-semibold text-slate-900">{item.title}</h4>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{item.caption}</p>
-                </div>
-              </article>
+              <BeforeAfterCard key={`${item.label}-${item.src}`} {...item} />
             ))}
           </div>
         </div>
@@ -219,4 +269,5 @@ export default function Projects() {
       </div>
     </section>
   );
+}
 }
