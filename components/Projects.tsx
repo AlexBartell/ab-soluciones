@@ -31,6 +31,12 @@ const galleryProjects = [
     caption: "Trabajo complementario de cerramiento exterior con terminación limpia.",
     alt: "Ampliación con cerramiento exterior blanco y ventanales",
   },
+  {
+    src: "muro_lateral_despues_revoque_recortada.png",
+    title: "Terminación lateral",
+    caption: "Encuentro lateral con muro revocado y presentación más limpia.",
+    alt: "Terminación lateral con muro revocado en obra de isopanel",
+  },
 ];
 
 const processProjects = [
@@ -45,23 +51,6 @@ const processProjects = [
     title: "Ajuste de remates",
     caption: "Trabajo en obra sobre el frente del techo para resolver terminaciones visibles.",
     alt: "Operario trabajando en remate frontal de techo de isopanel",
-  },
-];
-
-const wallReference = [
-  {
-    label: "Antes",
-    src: "muro_lateral_antes_revoque.jpg",
-    title: "Muro lateral antes del revoque",
-    caption: "Encuentro lateral con terminación pendiente y muro sin revoque final.",
-    alt: "Muro lateral antes del revoque y terminación final",
-  },
-  {
-    label: "Referencia",
-    src: "muro_lateral_despues_revoque_recortada.png",
-    title: "Referencia de terminación con revoque",
-    caption: "Ejemplo visual de cómo puede mejorar la presentación del encuentro lateral con muro revocado.",
-    alt: "Referencia visual de muro lateral terminado con revoque",
   },
 ];
 
@@ -197,32 +186,6 @@ export default function Projects() {
           <div className="mt-7 grid gap-6 md:grid-cols-2">
             {processProjects.map((project) => (
               <ProjectCard key={project.src} {...project} aspect="h-56" />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-7">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500">
-              Terminación lateral
-            </p>
-            <h3 className="mt-3 text-2xl font-bold tracking-tight text-slate-900">
-              Encuentro contra muro y referencia de revoque
-            </h3>
-            <p className="mt-4 text-base leading-7 text-slate-700">
-              En algunos trabajos, además del techo, puede convenir mejorar el encuentro
-              lateral contra muro para dejar una presentación más limpia. La imagen de
-              referencia muestra cómo puede verse una terminación con revoque.
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            {wallReference.map((item) => (
-              <BeforeAfterCard
-                key={`${item.label}-${item.src}`}
-                {...item}
-                imageSizes="(max-width: 768px) 100vw, 50vw"
-              />
             ))}
           </div>
         </div>
