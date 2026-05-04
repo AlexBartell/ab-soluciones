@@ -9,7 +9,7 @@ import { FaWhatsapp } from "react-icons/fa";
 
 export const metadata: Metadata = {
   title:
-    "Techo de Isopanel colocado desde USD 99/m² en Montevideo | MOD Soluciones",
+    "Techo de Isopanel colocado desde USD 90/m² en Montevideo | MOD Soluciones",
   description:
     "Calculá el precio estimado de tu techo de isopanel colocado en Montevideo y zona metropolitana. Instalación completa, remates, sellado, garantía y coordinación por WhatsApp.",
 };
@@ -68,7 +68,7 @@ const processSteps = [
 
 const faqs = [
   {
-    question: "¿El precio de USD 99/m² es final?",
+    question: "¿El precio de USD 90/m² es final?",
     answer:
       "Es un precio orientativo desde para obras simples. El presupuesto final puede variar por estructura, altura, remates, canaletas, acceso, retiro de techo anterior o condiciones reales de la obra.",
   },
@@ -134,7 +134,7 @@ export default function PrecioTechoIsopanelPage() {
               </p>
               <h3 className="mt-2 text-xl font-bold text-slate-900">Techo de 20 m²</h3>
               <p className="mt-3 text-slate-700">
-                Referencia aproximada desde <strong>USD 1.980</strong>
+                Referencia aproximada desde <strong>USD 1.800</strong>
               </p>
             </div>
 
@@ -144,7 +144,7 @@ export default function PrecioTechoIsopanelPage() {
               </p>
               <h3 className="mt-2 text-xl font-bold text-slate-900">Techo de 40 m²</h3>
               <p className="mt-3 text-slate-700">
-                Referencia aproximada desde <strong>USD 3.960</strong>
+                Referencia aproximada desde <strong>USD 3.600</strong>
               </p>
             </div>
 
@@ -154,13 +154,13 @@ export default function PrecioTechoIsopanelPage() {
               </p>
               <h3 className="mt-2 text-xl font-bold text-slate-900">Techo de 60 m²</h3>
               <p className="mt-3 text-slate-700">
-                Referencia aproximada desde <strong>USD 5.940</strong>
+                Referencia aproximada desde <strong>USD 5.400</strong>
               </p>
             </div>
           </div>
 
           <p className="mt-5 text-sm text-slate-500">
-            * Valores orientativos desde USD 99/m² para obras simples. La calculadora
+            * Valores orientativos desde USD 90/m² para obras simples. La calculadora
             puede redondear metros reales por cantidad de paneles necesarios.
           </p>
         </div>
@@ -174,7 +174,7 @@ export default function PrecioTechoIsopanelPage() {
                 Qué incluye
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-                ¿Qué incluye el precio desde USD 99/m²?
+                ¿Qué incluye el precio desde USD 90/m²?
               </h2>
               <p className="mt-4 text-base leading-7 text-slate-700 md:text-lg">
                 El objetivo no es solo colocar paneles. Buscamos entregar un techo
@@ -260,7 +260,9 @@ export default function PrecioTechoIsopanelPage() {
               <ol className="mt-6 space-y-4 text-slate-700">
                 {processSteps.map((step, index) => (
                   <li key={step.title} className="rounded-2xl border border-slate-200 p-5">
-                    <span className="font-semibold text-slate-900">{index + 1}. {step.title}</span>
+                    <span className="font-semibold text-slate-900">
+                      {index + 1}. {step.title}
+                    </span>
                     <p className="mt-1 text-sm leading-6 text-slate-600">{step.text}</p>
                   </li>
                 ))}

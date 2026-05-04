@@ -15,7 +15,7 @@ const parseDecimal = (value: string) => Number(value.replace(",", "."));
 export default function IsopanelBudgett() {
   const PANEL_WIDTH = 1.14;
   const EXTRA_CANAL_MULT = 1.2;
-  const PRICE_PER_M2 = 99;
+  const PRICE_PER_M2 = 90;
 
   const ADS_SEND_TO = "AW-17925960053/XZuOCO26t_YbEPXi4eNC";
 
