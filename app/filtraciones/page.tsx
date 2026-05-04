@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   FaWhatsapp,
   FaWater,
@@ -8,6 +9,7 @@ import {
   FaCheckCircle,
   FaExclamationTriangle,
   FaArrowRight,
+  FaClipboardList,
 } from "react-icons/fa";
 
 const WHATSAPP_NUMBER = "59895408688";
@@ -19,7 +21,7 @@ Tipo de techo: planchada / azotea / chapa / no sé
 Problema: gotera / humedad / filtración / membrana vieja
 ¿Dónde aparece el agua?
 ¿Hace cuánto pasa?
-Puedo enviar fotos y video.`
+¿Hay fotos o video del techo y de la humedad?`
 );
 
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
@@ -53,8 +55,8 @@ const pasos = [
   },
   {
     title: "Te pasamos una orientación clara",
-    desc: "Te explicamos qué se haría, qué puntos se trabajan y qué puede hacer variar el presupuesto.",
-    icon: FaCheckCircle,
+    desc: "Te explicamos qué se haría, qué puntos se trabajan y qué puede hacer variar el presupuesto. Si hace falta revisar en persona, coordinamos visita.",
+    icon: FaClipboardList,
   },
 ];
 
@@ -97,6 +99,33 @@ const soluciones = [
   },
 ];
 
+const fotosNecesarias = [
+  "Foto general del techo o azotea",
+  "Foto de la mancha, humedad o gotera",
+  "Foto de pretiles y encuentros contra muros",
+  "Foto de desagües, canaletas o salidas de agua",
+  "Video corto si se ve entrar agua cuando llueve",
+];
+
+const preguntas = [
+  {
+    q: "¿Pueden orientarme solo con fotos?",
+    a: "Sí, con fotos podemos darte una primera orientación y pedirte los datos importantes. Si el caso no se ve claro o hay que confirmar el origen, coordinamos visita.",
+  },
+  {
+    q: "¿Siempre se arregla con membrana líquida?",
+    a: "No. A veces sirve, pero otras veces primero hay que reparar fisuras, pretiles, desagües, membrana vieja o encuentros contra muros.",
+  },
+  {
+    q: "¿Trabajan solo aplicación de producto?",
+    a: "No vendemos membrana suelta. Trabajamos la solución completa según el estado del techo y el problema que haya que resolver.",
+  },
+  {
+    q: "¿La mancha indica exactamente dónde filtra?",
+    a: "No siempre. El agua puede entrar por un punto, correr por debajo o por una pendiente interna y aparecer en otro lugar.",
+  },
+];
+
 export const metadata = {
   title: "Reparación de filtraciones e impermeabilización de techos en Montevideo",
   description:
@@ -107,7 +136,7 @@ function WhatsappButton({
   children = "Enviar fotos por WhatsApp",
   className = "",
 }: {
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
 }) {
   return (
@@ -145,6 +174,13 @@ export default function FiltracionesPage() {
               WhatsApp y te orientamos según el caso.
             </p>
 
+            <div className="mt-6 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-4">
+              <p className="text-sm leading-6 text-amber-100">
+                Si ya apareció humedad o gotera, conviene revisar antes de que avance
+                hacia cielorraso, pintura, instalación eléctrica o muebles.
+              </p>
+            </div>
+
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <WhatsappButton />
               <a
@@ -159,7 +195,7 @@ export default function FiltracionesPage() {
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <p className="text-sm font-bold text-white">Orientación por fotos</p>
                 <p className="mt-1 text-sm text-slate-400">
-                  Sin vueltas para entender el problema.
+                  Primera lectura del problema por WhatsApp.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -203,11 +239,23 @@ export default function FiltracionesPage() {
                 </div>
               </div>
 
+              <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+                <p className="text-sm font-bold text-slate-900">Para responderte mejor, mandá:</p>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+                  {fotosNecesarias.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <FaCheckCircle className="mt-1 shrink-0 text-emerald-600" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
               <WhatsappButton className="mt-6 w-full" />
 
               <p className="mt-4 text-center text-xs leading-5 text-slate-500">
-                Ideal enviar foto general del techo, foto de la humedad y video
-                corto si se ve entrar agua.
+                Con fotos podemos darte una primera orientación. Si hace falta revisar
+                en persona, coordinamos visita para confirmar la solución.
               </p>
             </div>
           </div>
@@ -317,6 +365,17 @@ export default function FiltracionesPage() {
                 no se resuelven igual. Por eso pedimos fotos antes de orientar.
               </p>
             </div>
+
+            <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
+              <h3 className="text-xl font-black text-slate-900">
+                No vendemos membrana suelta
+              </h3>
+              <p className="mt-2 leading-7 text-slate-700">
+                Trabajamos la solución completa según el estado del techo. Puede incluir
+                limpieza, reparación, sellado, imprimación, malla, membrana líquida,
+                membrana asfáltica u otro sistema según el caso.
+              </p>
+            </div>
           </div>
 
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -364,6 +423,31 @@ export default function FiltracionesPage() {
               >
                 <h3 className="text-lg font-bold text-slate-900">{item.title}</h3>
                 <p className="mt-2 leading-7 text-slate-600">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+              Preguntas comunes
+            </p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+              Antes de presupuestar, conviene entender el origen
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              La idea es evitar soluciones rápidas que después vuelvan a filtrar.
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {preguntas.map((item) => (
+              <div key={item.q} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-900">{item.q}</h3>
+                <p className="mt-2 leading-7 text-slate-600">{item.a}</p>
               </div>
             ))}
           </div>
