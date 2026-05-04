@@ -1,19 +1,24 @@
 import { FaBolt, FaRulerCombined, FaComments } from "react-icons/fa";
 
+const WHATSAPP_URL = "https://wa.me/598XXXXXXXX";
+
 const items = [
   {
     title: "Rápido y en fecha",
-    desc: "Coordinamos y ejecutamos con orden para que el trabajo termine cuando te prometimos.",
+    desc: "Coordinamos y ejecutamos con orden para que el trabajo avance sin vueltas ni atrasos innecesarios.",
+    note: "Planificación clara desde el primer contacto.",
     icon: FaBolt,
   },
   {
     title: "Terminación prolija",
-    desc: "Remates, niveles y detalles bien resueltos. Cuidamos la estética del resultado final.",
+    desc: "Cuidamos remates, niveles, sellados, goteros y encuentros contra muros para dejar un resultado bien terminado.",
+    note: "Los detalles son parte del trabajo, no un extra.",
     icon: FaRulerCombined,
   },
   {
     title: "Trato directo",
-    desc: "Hablás con nosotros: presupuesto claro, avances y seguimiento sin vueltas.",
+    desc: "Hablás con nosotros por WhatsApp para medidas, fotos, presupuesto, coordinación y seguimiento de la obra.",
+    note: "Comunicación simple antes, durante y después.",
     icon: FaComments,
   },
 ];
@@ -27,15 +32,16 @@ export default function WhyUs() {
             ¿Por qué elegirnos?
           </h2>
           <p className="mt-2 max-w-prose text-slate-600 md:text-lg">
-            Si buscás una obra prolija, sin demoras y con comunicación clara, estás en el lugar correcto.
+            Porque un techo no se trata solo de colocar paneles: también importan la estructura,
+            los remates, el sellado, la caída del agua y la comunicación durante la obra.
           </p>
         </div>
 
         <a
-          href="https://wa.me/598XXXXXXXX"
+          href={WHATSAPP_URL}
           target="_blank"
           rel="noreferrer"
-          className="mt-3 inline-flex w-fit items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition md:mt-0"
+          className="mt-3 inline-flex w-fit items-center justify-center rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 md:mt-0"
         >
           Consultar por WhatsApp
         </a>
@@ -44,6 +50,7 @@ export default function WhyUs() {
       <div className="mt-8 grid gap-6 md:grid-cols-3">
         {items.map((x) => {
           const Icon = x.icon;
+
           return (
             <div
               key={x.title}
@@ -58,9 +65,7 @@ export default function WhyUs() {
 
               <div className="mt-4 h-px w-full bg-slate-100" />
 
-              <p className="mt-3 text-xs text-slate-500">
-                Presupuesto claro + coordinación rápida.
-              </p>
+              <p className="mt-3 text-xs font-medium text-slate-500">{x.note}</p>
             </div>
           );
         })}
