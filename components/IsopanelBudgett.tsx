@@ -214,15 +214,15 @@ export default function IsopanelBudgett() {
 
   return (
     <>
-      <section className="relative w-full overflow-hidden bg-slate-950">
-        <div className="relative h-[78vh] min-h-[620px] md:h-[620px]">
+      <section className="relative w-full overflow-hidden">
+        <div className="relative h-[78vh] min-h-[560px] md:h-[620px]">
           {/* Background desktop */}
           <Image
             src="/imagenes/unnamed.jpg"
             alt="Techo de isopanel colocado"
             fill
             priority
-            className="hidden object-cover object-[center_35%] md:block"
+            className="hidden md:block object-cover object-[center_35%]"
           />
 
           {/* Background mobile */}
@@ -231,18 +231,19 @@ export default function IsopanelBudgett() {
             alt="Techo de isopanel colocado"
             fill
             priority
-            className="block object-cover object-[center_35%] md:hidden"
+            className="block md:hidden object-cover object-[center_35%]"
           />
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/75 md:bg-gradient-to-r md:from-black/70 md:via-black/35 md:to-black/10" />
+          {/* Overlay suave para legibilidad */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/55 md:bg-gradient-to-r md:from-black/55 md:via-black/25 md:to-transparent" />
 
           {/* Contenido */}
           <div className="absolute inset-0 z-10">
             <div className="mx-auto h-full max-w-6xl px-5 sm:px-6">
-              <div className="h-full pt-[8%] md:flex md:items-center md:pt-0">
-                <div className="max-w-3xl text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-                  <div className="mb-5 w-[72%] max-w-[420px] md:mb-6 md:w-[340px]">
+              <div className="h-full pt-[9%] md:pt-0 md:flex md:items-center">
+                <div className="text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
+                  {/* Logo */}
+                  <div className="mb-5 md:mb-6 w-[72%] max-w-[420px] md:w-[340px]">
                     <Image
                       src="/imagenes/logo1.png"
                       alt="MOD Soluciones"
@@ -257,18 +258,19 @@ export default function IsopanelBudgett() {
                     Montevideo y zona metropolitana
                   </p>
 
-                  <h1 className="mt-3 max-w-[16ch] text-[clamp(38px,6.4vw,70px)] font-semibold leading-[1.03] tracking-[-0.04em]">
-                    Techo de Isopanel colocado desde USD {PRICE_PER_M2}/m²
+                  <h1 className="mt-3 font-semibold leading-[1.05] tracking-[-0.02em] text-[clamp(36px,6.4vw,66px)] max-w-[18ch] md:max-w-[24ch]">
+                    Techo de Isopanel
+                    <br />
+                    desde USD {PRICE_PER_M2}/m²
                   </h1>
 
-                  <p className="mt-5 max-w-[38ch] text-[clamp(18px,3vw,28px)] font-medium leading-tight text-white/92">
-                    Instalación completa, remates prolijos y coordinación directa por
-                    WhatsApp.
+                  <p className="mt-4 font-medium text-[clamp(18px,3.2vw,28px)] text-white/90 max-w-[34ch]">
+                    Instalación completa con remates prolijos y coordinación directa
+                    por WhatsApp.
                   </p>
 
-                  <p className="mt-3 max-w-[44ch] text-[clamp(15px,2.2vw,21px)] leading-7 text-white/82">
-                    Calculá una estimación online o enviá tus medidas para orientarte
-                    mejor.
+                  <p className="mt-3 text-[clamp(15px,2.4vw,21px)] text-white/80 max-w-[42ch]">
+                    Calculá una estimación online o enviá tus medidas para orientarte mejor.
                   </p>
 
                   <div className="mt-7 flex flex-wrap gap-3">
@@ -297,16 +299,16 @@ export default function IsopanelBudgett() {
                   </p>
 
                   <div className="mt-5 flex flex-wrap gap-2 text-xs text-white/85">
-                    <span className="rounded-full bg-black/30 px-3 py-1.5">
+                    <span className="rounded-full bg-black/25 px-3 py-1">
                       Isopanel de 10 cm
                     </span>
-                    <span className="rounded-full bg-black/30 px-3 py-1.5">
+                    <span className="rounded-full bg-black/25 px-3 py-1">
                       Instalación completa
                     </span>
-                    <span className="rounded-full bg-black/30 px-3 py-1.5">
+                    <span className="rounded-full bg-black/25 px-3 py-1">
                       Remates y sellados
                     </span>
-                    <span className="rounded-full bg-black/30 px-3 py-1.5">
+                    <span className="rounded-full bg-black/25 px-3 py-1">
                       No vendemos material suelto
                     </span>
                   </div>
@@ -336,8 +338,7 @@ export default function IsopanelBudgett() {
               </p>
 
               <p className="mt-3 text-base leading-7 text-slate-700 md:text-lg">
-                Por eso cotizamos el techo completo, no solo el metro cuadrado de
-                material.
+                Por eso cotizamos el techo completo, no solo el metro cuadrado de material.
               </p>
             </div>
 
@@ -352,8 +353,7 @@ export default function IsopanelBudgett() {
                     1. Caída / largo del panel
                   </p>
                   <p className="mt-1">
-                    Es la distancia desde donde empieza el techo hasta donde cae el
-                    agua.
+                    Es la distancia desde donde empieza el techo hasta donde cae el agua.
                   </p>
                 </div>
 
@@ -362,8 +362,7 @@ export default function IsopanelBudgett() {
                     2. Frente / ancho a cubrir
                   </p>
                   <p className="mt-1">
-                    Es el lado que se divide en paneles de 1,14 m y se redondea hacia
-                    arriba.
+                    Es el lado que se divide en paneles de 1,14 m y se redondea hacia arriba.
                   </p>
                 </div>
               </div>
@@ -552,8 +551,7 @@ export default function IsopanelBudgett() {
               {calc.valid && calc.requiereApoyo && (
                 <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
                   <strong>Atención:</strong> la caída ingresada supera 5,50 m. En este
-                  caso puede requerir apoyo intermedio o una solución estructural
-                  específica.
+                  caso puede requerir apoyo intermedio o una solución estructural específica.
                 </div>
               )}
 
@@ -658,8 +656,7 @@ export default function IsopanelBudgett() {
                         </p>
                         <p className="pt-2 text-xs text-slate-500">
                           El cálculo contempla paneles de 1,14 m de ancho útil y se
-                          redondea a panel completo. Es una estimación, no presupuesto
-                          final.
+                          redondea a panel completo. Es una estimación, no presupuesto final.
                         </p>
                       </div>
                     </details>
