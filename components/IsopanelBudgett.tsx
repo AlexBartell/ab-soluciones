@@ -585,7 +585,7 @@ export default function IsopanelBudgett() {
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleWhatsappClick("calculator_result")}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold transition hover:bg-green-600"
                     >
                       <FaWhatsapp size={20} />
                       Quiero avanzar con este techo
