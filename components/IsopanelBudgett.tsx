@@ -24,7 +24,6 @@ export default function IsopanelBudgett() {
   const [caida, setCaida] = useState("");
   const [frente, setFrente] = useState("");
   const [zona, setZona] = useState("Montevideo");
-  const [altura, setAltura] = useState("No sé / a confirmar");
   const [estructura, setEstructura] = useState("No sé / a revisar");
   const [tipoTrabajo, setTipoTrabajo] = useState("Techo nuevo");
   const [conCanaleta, setConCanaleta] = useState(false);
@@ -105,11 +104,9 @@ export default function IsopanelBudgett() {
         `M² reales estimados: ${m2Material}\n` +
         `Canaleta / desagüe: ${canal}\n` +
         `Zona: ${zona}\n` +
-        `Altura: ${altura}\n` +
         `Estructura existente: ${estructura}\n` +
         `Tipo de trabajo: ${tipoTrabajo}\n` +
         `Apoyo intermedio: ${apoyo}\n` +
-        `Precio orientativo desde: USD ${PRICE_PER_M2}/m² instalado\n` +
         `Estimación web: ${total}\n\n` +
         `Les paso fotos si necesitan.`
     );
@@ -118,7 +115,6 @@ export default function IsopanelBudgett() {
     frente,
     conCanaleta,
     zona,
-    altura,
     estructura,
     tipoTrabajo,
     calc.valid,
@@ -153,7 +149,6 @@ export default function IsopanelBudgett() {
       frente_m: Number(parseDecimal(frente).toFixed(2)),
       canaleta: conCanaleta ? "si" : "no",
       zona,
-      altura,
       estructura,
       tipo_trabajo: tipoTrabajo,
       requiere_apoyo: calc.requiereApoyo ? "si" : "no",
@@ -182,7 +177,6 @@ export default function IsopanelBudgett() {
       estimated_value: calc.valid ? Math.round(calc.total) : undefined,
       canaleta: conCanaleta ? "si" : "no",
       zona,
-      altura,
       estructura,
       tipo_trabajo: tipoTrabajo,
       price_per_m2: PRICE_PER_M2,
@@ -195,7 +189,6 @@ export default function IsopanelBudgett() {
         paneles: calc.paneles,
         m2_material: Number(calc.m2Reales.toFixed(2)),
         zona,
-        altura,
         estructura,
         tipo_trabajo: tipoTrabajo,
       });
@@ -210,7 +203,7 @@ export default function IsopanelBudgett() {
 
   useEffect(() => {
     setShowResult(false);
-  }, [caida, frente, conCanaleta, zona, altura, estructura, tipoTrabajo]);
+  }, [caida, frente, conCanaleta, zona, estructura, tipoTrabajo]);
 
   return (
     <>
@@ -287,7 +280,7 @@ export default function IsopanelBudgett() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleWhatsappClick("hero")}
-                  className="inline-flex items-center justify-center gap-3 rounded-2xl bg-green-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-black/25 transition hover:bg-green-600 md:px-7 md:py-3.5 md:text-base"
+                  className="inline-flex items-center justify-center gap-3 rounded-2xl bg-white px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-black/25 transition hover:bg-slate-100 md:px-7 md:py-3.5 md:text-base"
                 >
                   <FaWhatsapp size={20} />
                   Quiero hacer mi techo
@@ -295,7 +288,7 @@ export default function IsopanelBudgett() {
 
                 <a
                   href="#calculadora-isopanel"
-                  className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-black/25 transition hover:bg-slate-100 md:px-7 md:py-3.5 md:text-base"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/25 bg-black/35 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-black/25 transition hover:bg-black/45 md:px-7 md:py-3.5 md:text-base"
                 >
                   Calcular precio estimado
                 </a>
@@ -397,22 +390,9 @@ export default function IsopanelBudgett() {
                 </p>
 
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Ingresá medidas aproximadas y te mostramos una estimación desde
-                  USD {PRICE_PER_M2}/m² para obras simples.
+                  Ingresá medidas aproximadas y te mostramos una estimación para
+                  avanzar con tu techo.
                 </p>
-
-                <div className="mt-4 rounded-2xl bg-white p-4 shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                    Precio orientativo desde
-                  </p>
-                  <p className="mt-1 text-3xl font-bold text-slate-900">
-                    USD {PRICE_PER_M2}
-                    <span className="text-base font-semibold text-slate-500">
-                      {" "}
-                      / m² instalado
-                    </span>
-                  </p>
-                </div>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -469,24 +449,6 @@ export default function IsopanelBudgett() {
 
                 <div>
                   <label className="block text-sm font-medium text-slate-700">
-                    Altura de trabajo
-                  </label>
-                  <select
-                    value={altura}
-                    onChange={(e) => setAltura(e.target.value)}
-                    className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
-                  >
-                    <option>No sé / a confirmar</option>
-                    <option>Planta baja</option>
-                    <option>Primer piso</option>
-                    <option>Segundo piso o más</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700">
                     Estructura existente
                   </label>
                   <select
@@ -500,22 +462,22 @@ export default function IsopanelBudgett() {
                     <option>Hay techo existente para retirar</option>
                   </select>
                 </div>
+              </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-slate-700">
-                    Tipo de trabajo
-                  </label>
-                  <select
-                    value={tipoTrabajo}
-                    onChange={(e) => setTipoTrabajo(e.target.value)}
-                    className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
-                  >
-                    <option>Techo nuevo</option>
-                    <option>Reemplazo de techo</option>
-                    <option>Ampliación</option>
-                    <option>No sé / quiero asesoramiento</option>
-                  </select>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700">
+                  Tipo de trabajo
+                </label>
+                <select
+                  value={tipoTrabajo}
+                  onChange={(e) => setTipoTrabajo(e.target.value)}
+                  className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
+                >
+                  <option>Techo nuevo</option>
+                  <option>Reemplazo de techo</option>
+                  <option>Ampliación</option>
+                  <option>No sé / quiero asesoramiento</option>
+                </select>
               </div>
 
               <button
@@ -675,9 +637,8 @@ export default function IsopanelBudgett() {
               </div>
 
               <p className="text-xs text-slate-500">
-                * Valor orientativo desde USD {PRICE_PER_M2}/m² para obras simples en
-                Montevideo y zona metropolitana. Puede variar según estructura, remates,
-                altura, canaletas, acceso y condiciones reales del techo.
+                * La estimación puede variar según estructura, remates, canaletas,
+                acceso y condiciones reales del techo.
               </p>
             </div>
           </div>
