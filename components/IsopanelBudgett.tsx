@@ -98,7 +98,7 @@ export default function IsopanelBudgett() {
       : "-";
 
     return encodeURIComponent(
-      `Hola, quiero cotizar un techo de isopanel.\n` +
+      `Hola, quiero avanzar con un techo de isopanel.\n` +
         `Caída / largo del panel: ${caidaText} m\n` +
         `Frente / ancho a cubrir: ${frenteText} m\n` +
         `Paneles estimados: ${paneles}\n` +
@@ -215,116 +215,111 @@ export default function IsopanelBudgett() {
   return (
     <>
       <section className="relative w-full overflow-hidden">
-  <div className="relative min-h-[540px] md:h-[620px]">
-    {/* Background desktop */}
-    <Image
-      src="/imagenes/unnamed.jpg"
-      alt="Techo de isopanel colocado"
-      fill
-      priority
-      className="hidden object-cover object-[center_35%] md:block"
-    />
+        <div className="relative min-h-[540px] md:h-[620px]">
+          <Image
+            src="/imagenes/unnamed.jpg"
+            alt="Techo de isopanel colocado"
+            fill
+            priority
+            className="hidden object-cover object-[center_35%] md:block"
+          />
 
-    {/* Background mobile */}
-    <Image
-      src="/imagenes/mobile.png"
-      alt="Techo de isopanel colocado"
-      fill
-      priority
-      className="block object-cover object-[center_35%] md:hidden"
-    />
+          <Image
+            src="/imagenes/mobile.png"
+            alt="Techo de isopanel colocado"
+            fill
+            priority
+            className="block object-cover object-[center_35%] md:hidden"
+          />
 
-    {/* Overlay suave para legibilidad */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/70 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/70 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent" />
 
-    {/* Contenido */}
-    <div className="relative z-10 mx-auto max-w-6xl px-5 py-9 sm:px-6 md:flex md:h-[620px] md:items-center md:py-0">
-      <div className="max-w-3xl text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80 md:text-sm">
-          Montevideo y zona metropolitana
-        </p>
+          <div className="relative z-10 mx-auto max-w-6xl px-5 py-9 sm:px-6 md:flex md:h-[620px] md:items-center md:py-0">
+            <div className="max-w-3xl text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80 md:text-sm">
+                Montevideo y zona metropolitana
+              </p>
 
-        <h1 className="mt-3 max-w-[13ch] text-[clamp(36px,11vw,52px)] font-bold leading-[1.02] tracking-[-0.04em] md:max-w-[16ch] md:text-[clamp(48px,6.4vw,70px)]">
-          Techo de isopanel desde USD {PRICE_PER_M2}/m²
-        </h1>
+              <h1 className="mt-3 max-w-[13ch] text-[clamp(38px,11vw,54px)] font-bold leading-[1.02] tracking-[-0.04em] md:max-w-[16ch] md:text-[clamp(52px,6.4vw,76px)]">
+                Hacemos tu techo de isopanel
+              </h1>
 
-        <p className="mt-4 max-w-[32ch] text-base font-medium leading-7 text-white/90 md:max-w-[40ch] md:text-[clamp(17px,2.5vw,24px)] md:leading-8">
-          Instalación completa con panel de 10 cm, estructura según el caso,
-          fijaciones, remates y sellado.
-        </p>
+              <p className="mt-4 max-w-[34ch] text-base font-medium leading-7 text-white/90 md:max-w-[42ch] md:text-[clamp(18px,2.5vw,25px)] md:leading-8">
+                Instalación completa con panel de 10 cm, estructura según el caso,
+                fijaciones, remates y sellado.
+              </p>
 
-        {/* Tarjetas solo desktop/tablet */}
-        <div className="mt-6 hidden max-w-xl gap-3 sm:grid-cols-3 md:grid">
-          <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-emerald-200">
-              Desde
-            </p>
-            <p className="mt-1 text-2xl font-bold text-white">
-              USD {PRICE_PER_M2}
-            </p>
-            <p className="text-xs text-white/75">/ m² instalado</p>
-          </div>
+              <div className="mt-6 hidden max-w-xl gap-3 sm:grid-cols-3 md:grid">
+                <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
+                    Servicio
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    Techo instalado
+                  </p>
+                  <p className="text-xs text-white/75">No vendemos material suelto</p>
+                </div>
 
-          <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
-              Incluye
-            </p>
-            <p className="mt-1 text-sm font-semibold text-white">
-              Panel + instalación
-            </p>
-            <p className="text-xs text-white/75">No vendemos material suelto</p>
-          </div>
+                <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
+                    Incluye
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    Panel + instalación
+                  </p>
+                  <p className="text-xs text-white/75">Fijaciones y remates</p>
+                </div>
 
-          <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
-              Diferencial
-            </p>
-            <p className="mt-1 text-sm font-semibold text-white">
-              Sellados y remates
-            </p>
-            <p className="text-xs text-white/75">Sellados y encuentros</p>
+                <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
+                    Confirmación
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    Medidas y fotos
+                  </p>
+                  <p className="text-xs text-white/75">Revisamos tu caso</p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-7">
+                <a
+                  href="https://wa.me/59895408688?text=Hola%2C%20quiero%20hacer%20un%20techo%20de%20isopanel"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => handleWhatsappClick("hero")}
+                  className="inline-flex items-center justify-center gap-3 rounded-2xl bg-green-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-black/25 transition hover:bg-green-600 md:px-7 md:py-3.5 md:text-base"
+                >
+                  <FaWhatsapp size={20} />
+                  Quiero hacer mi techo
+                </a>
+
+                <a
+                  href="#calculadora-isopanel"
+                  className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-black/25 transition hover:bg-slate-100 md:px-7 md:py-3.5 md:text-base"
+                >
+                  Calcular precio estimado
+                </a>
+              </div>
+
+              <p className="mt-3 max-w-sm text-xs leading-5 text-white/75 md:max-w-xl">
+                Pasá medidas o fotos y vemos tu caso en el momento.
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2 text-xs text-white/85">
+                <span className="rounded-full bg-black/25 px-3 py-1">
+                  Isopanel 10 cm
+                </span>
+                <span className="rounded-full bg-black/25 px-3 py-1">
+                  Instalación completa
+                </span>
+                <span className="rounded-full bg-black/25 px-3 py-1">
+                  No vendemos material suelto
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-7">
-          <a
-            href="#calculadora-isopanel"
-            className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-black/25 transition hover:bg-slate-100 md:px-7 md:py-3.5 md:text-base"
-          >
-            Calcular precio estimado
-          </a>
-
-          <a
-            href="https://wa.me/59895408688?text=Hola%2C%20quiero%20consultar%20por%20un%20techo%20de%20isopanel%20instalado"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => handleWhatsappClick("hero")}
-            className="inline-flex items-center justify-center gap-3 rounded-2xl bg-green-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-black/25 transition hover:bg-green-600 md:px-7 md:py-3.5 md:text-base"
-          >
-            <FaWhatsapp size={20} />
-            Consultar por WhatsApp
-          </a>
-        </div>
-
-        <p className="mt-3 max-w-sm text-xs leading-5 text-white/75 md:max-w-xl">
-          Primero podemos orientarte por medidas y fotos.
-        </p>
-
-        <div className="mt-5 flex flex-wrap gap-2 text-xs text-white/85">
-          <span className="rounded-full bg-black/25 px-3 py-1">
-            Isopanel 10 cm
-          </span>
-          <span className="rounded-full bg-black/25 px-3 py-1">
-            Instalación completa
-          </span>
-          <span className="rounded-full bg-black/25 px-3 py-1">
-            No vendemos material suelto
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       <section className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:px-6 md:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -398,12 +393,12 @@ export default function IsopanelBudgett() {
             <div className="grid gap-5">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">
-                  Calculadora de techo de isopanel instalado
+                  Calculá una referencia para tu techo
                 </p>
 
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Estimación base para obras simples. El presupuesto final se confirma
-                  según estructura, altura, remates y condiciones reales.
+                  Ingresá medidas aproximadas y te mostramos una estimación desde
+                  USD {PRICE_PER_M2}/m² para obras simples.
                 </p>
 
                 <div className="mt-4 rounded-2xl bg-white p-4 shadow-sm">
@@ -572,19 +567,21 @@ export default function IsopanelBudgett() {
                     : "cursor-not-allowed bg-slate-200 text-slate-500"
                 }`}
               >
-                Ver precio estimado
+                Ver estimación para mi techo
               </button>
 
               <div ref={resultRef} className="rounded-2xl border border-slate-200 p-5">
                 {!showResult ? (
                   <p className="text-sm text-slate-600">
                     Ingresá la caída y el frente, completá los datos básicos y tocá{" "}
-                    <strong>“Ver precio estimado”</strong>.
+                    <strong>“Ver estimación para mi techo”</strong>.
                   </p>
                 ) : (
                   <div className="space-y-4">
                     <div className="rounded-2xl bg-slate-900 p-5 text-white">
-                      <p className="text-xs text-white/80">Estimación orientativa</p>
+                      <p className="text-xs text-white/80">
+                        Estimación para hacer tu techo
+                      </p>
                       <p className="mt-1 text-3xl font-semibold">{money(calc.total)}</p>
 
                       <p className="mt-3 text-sm text-white/85">
@@ -592,12 +589,12 @@ export default function IsopanelBudgett() {
                       </p>
 
                       <p className="mt-2 text-xs text-white/70">
-                        Precio desde USD {PRICE_PER_M2}/m² instalado para obras simples.
+                        Este valor es orientativo según las medidas ingresadas.
                       </p>
 
                       <p className="mt-2 text-xs text-white/70">
-                        El presupuesto final se confirma con visita o revisión técnica
-                        según estructura, remates, altura, canaletas y condiciones reales.
+                        Si te sirve esta referencia, el siguiente paso es pasarnos fotos
+                        o coordinar detalles para confirmar el trabajo.
                       </p>
                     </div>
 
@@ -626,14 +623,20 @@ export default function IsopanelBudgett() {
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => handleWhatsappClick("calculator_result")}
-                      className="inline-flex w-full items-center justify-center rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-green-600"
                     >
-                      📲 Enviar estas medidas por WhatsApp
+                      <FaWhatsapp size={20} />
+                      Quiero avanzar con este techo
                     </a>
 
                     <p className="text-center text-xs text-slate-500">
-                      Primero podemos orientarte por medidas y fotos. Si el trabajo tiene
-                      sentido, coordinamos visita técnica para confirmar el precio.
+                      Te respondemos por WhatsApp para revisar medidas, fotos,
+                      estructura y confirmar el presupuesto final.
+                    </p>
+
+                    <p className="text-center text-xs text-slate-500">
+                      Si el trabajo tiene sentido, coordinamos visita técnica para
+                      dejarlo confirmado.
                     </p>
 
                     <details className="rounded-2xl bg-slate-50 p-4">
