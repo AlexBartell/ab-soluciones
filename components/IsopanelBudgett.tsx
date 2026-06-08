@@ -1,649 +1,742 @@
-"use client";
+import type { ReactNode } from "react";
+import {
+  FaWhatsapp,
+  FaWater,
+  FaHome,
+  FaTools,
+  FaSearch,
+  FaCamera,
+  FaCheckCircle,
+  FaExclamationTriangle,
+  FaArrowRight,
+  FaClipboardList,
+} from "react-icons/fa";
 
-import Image from "next/image";
-import { FaWhatsapp } from "react-icons/fa";
-import { useEffect, useMemo, useRef, useState } from "react";
+const WHATSAPP_NUMBER = "59895408688";
 
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-  }
+const WHATSAPP_MESSAGE = encodeURIComponent(
+  `Hola, quiero consultar por una filtración en techo.
+
+Zona:
+Tipo de techo:
+¿Tenés fotos o video?`
+);
+
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+
+const tiposDeTecho = [
+  {
+    title: "Techos de isopanel",
+    desc: "Revisamos filtraciones en juntas, tornillos, babetas, remates, encuentros contra muro y cortes mal sellados.",
+    puntos: [
+      "Juntas entre paneles",
+      "Tornillos o arandelas",
+      "Encuentros contra pared",
+      "Babetas y terminaciones",
+    ],
+  },
+  {
+    title: "Planchadas y azoteas",
+    desc: "Tratamos fisuras, membrana vieja, pretiles, desagües, agua empozada y zonas donde la impermeabilización puede fallar.",
+    puntos: [
+      "Fisuras y microfisuras",
+      "Pretiles",
+      "Desagües",
+      "Membrana deteriorada",
+    ],
+  },
+  {
+    title: "Techos de chapa",
+    desc: "Evaluamos reparaciones puntuales en chapa, canaletas, cumbreras, solapes y encuentros críticos, según el estado del techo.",
+    puntos: [
+      "Tornillería",
+      "Cumbreras",
+      "Canaletas",
+      "Solapes y encuentros",
+    ],
+  },
+];
+
+const problemas = [
+  "Goteras cuando llueve",
+  "Manchas de humedad en cielorraso",
+  "Filtraciones en azoteas",
+  "Fisuras en planchadas",
+  "Membrana vieja, floja o levantada",
+  "Pretiles con entrada de agua",
+  "Canaletas o desagües problemáticos",
+  "Encuentros contra muros",
+];
+
+const pasos = [
+  {
+    title: "Nos enviás fotos o video",
+    desc: "Pedimos fotos del techo, de la zona donde aparece la humedad y de los puntos críticos: pretiles, desagües, canaletas, fisuras, babetas o encuentros contra muros.",
+    icon: FaCamera,
+  },
+  {
+    title: "Evaluamos el origen probable",
+    desc: "No siempre la entrada de agua está justo arriba de la mancha. Primero intentamos entender por dónde puede estar filtrando y qué partes conviene revisar.",
+    icon: FaSearch,
+  },
+  {
+    title: "Definimos la solución adecuada",
+    desc: "Según el caso puede ser sellado, reparación de fisuras, tratamiento de pretiles, membrana líquida, membrana asfáltica, refuerzo con malla o corrección de desagües.",
+    icon: FaTools,
+  },
+  {
+    title: "Te pasamos una orientación clara",
+    desc: "Te explicamos qué se haría, qué puntos se trabajarían, qué puede hacer variar el presupuesto y si conviene coordinar una visita técnica.",
+    icon: FaClipboardList,
+  },
+];
+
+const fallas = [
+  "Aplicar membrana sin limpiar bien",
+  "Fisuras sin tratar",
+  "Humedad atrapada debajo",
+  "Superficie floja o mal adherida",
+  "Pretiles sin sellar",
+  "Desagües mal resueltos",
+  "Encuentros contra muros abiertos",
+  "Canaletas tapadas o mal diseñadas",
+  "Falta de pendiente",
+  "Aplicar poco producto o sin refuerzo",
+];
+
+const soluciones = [
+  {
+    title: "Sellado de fisuras y juntas",
+    desc: "Tratamiento de grietas, juntas, cortes, encuentros y puntos donde puede estar entrando agua.",
+  },
+  {
+    title: "Impermeabilización de planchadas",
+    desc: "Lavado, preparación de superficie, reparación de puntos críticos y aplicación del sistema correspondiente.",
+  },
+  {
+    title: "Membrana líquida",
+    desc: "Aplicación sobre superficies aptas, con preparación previa y refuerzos donde el caso lo requiera.",
+  },
+  {
+    title: "Membrana asfáltica",
+    desc: "Solución en rollo para determinados casos donde conviene mayor espesor y protección.",
+  },
+  {
+    title: "Pretiles, babetas y encuentros",
+    desc: "Revisión de bordes, muros, babetas, remates y zonas donde suelen originarse filtraciones.",
+  },
+  {
+    title: "Desagües y canaletas",
+    desc: "Revisión de salidas de agua, pendientes, canaletas y puntos donde el agua puede acumularse.",
+  },
+];
+
+const fotosNecesarias = [
+  "Foto general del techo, azotea o zona afectada",
+  "Foto de la mancha, humedad o gotera desde adentro",
+  "Foto de pretiles, babetas o encuentros contra muros",
+  "Foto de desagües, canaletas o salidas de agua",
+  "Video corto si se ve entrar agua cuando llueve",
+];
+
+const preguntas = [
+  {
+    q: "¿Pueden orientarme solo con fotos?",
+    a: "Sí. Con fotos y videos podemos darte una primera orientación y pedirte los datos importantes. Si el origen no se ve claro o hay que confirmar el estado del techo, coordinamos visita técnica.",
+  },
+  {
+    q: "¿Siempre se arregla con membrana líquida?",
+    a: "No. A veces la membrana líquida sirve, pero otras veces primero hay que reparar fisuras, pretiles, desagües, babetas, canaletas o retirar material flojo.",
+  },
+  {
+    q: "¿Hacen solo aplicación de producto?",
+    a: "No trabajamos como venta de producto suelto. Buscamos entender el problema completo según el estado del techo y el origen probable de la filtración.",
+  },
+  {
+    q: "¿La mancha indica exactamente dónde filtra?",
+    a: "No siempre. El agua puede entrar por un punto, correr por debajo de la membrana, por una pendiente interna o por una estructura, y aparecer en otro lugar.",
+  },
+  {
+    q: "¿La visita técnica es gratis?",
+    a: "La orientación inicial por WhatsApp es sin costo. Si el caso requiere revisión en obra, la visita puede tener costo según la zona y se descuenta si se realiza el trabajo.",
+  },
+  {
+    q: "¿Qué pasa si vuelve a aparecer humedad?",
+    a: "Antes de trabajar dejamos claro qué puntos se van a reparar y cuál es el alcance del trabajo. En filtraciones, el resultado depende del estado general del techo, pendientes, fisuras, pretiles, desagües, encuentros y trabajos anteriores.",
+  },
+];
+
+export const metadata = {
+  title:
+    "Reparación de filtraciones en techos, azoteas y planchadas | MOD Soluciones",
+  description:
+    "Reparación de goteras, humedad y filtraciones en techos de isopanel, chapa, azoteas y planchadas. Enviá fotos por WhatsApp y recibí una primera orientación.",
+};
+
+function WhatsappButton({
+  children = "Consultar filtración por WhatsApp",
+  className = "",
+}: {
+  children?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noreferrer"
+      className={`inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-4 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 ${className}`}
+    >
+      <FaWhatsapp size={18} />
+      {children}
+    </a>
+  );
 }
 
-type WhatsappPlacement = "hero" | "calculator_result";
-
-const parseDecimal = (value: string) => Number(value.replace(",", "."));
-
-export default function IsopanelBudgett() {
-  const PANEL_WIDTH = 1.14;
-  const EXTRA_CANAL_MULT = 1.2;
-  const PRICE_PER_M2 = 90;
-
-  const ADS_SEND_TO = "AW-17925960053/XZuOCO26t_YbEPXi4eNC";
-
-  const [caida, setCaida] = useState("");
-  const [frente, setFrente] = useState("");
-  const [zona, setZona] = useState("Montevideo");
-  const [estructura, setEstructura] = useState("No sé / a revisar");
-  const [tipoTrabajo, setTipoTrabajo] = useState("Techo nuevo");
-  const [conCanaleta, setConCanaleta] = useState(false);
-
-  const [showResult, setShowResult] = useState(false);
-
-  const resultRef = useRef<HTMLDivElement | null>(null);
-
-  const calc = useMemo(() => {
-    const caidaNum = parseDecimal(caida);
-    const frenteNum = parseDecimal(frente);
-
-    const valid =
-      Number.isFinite(caidaNum) &&
-      Number.isFinite(frenteNum) &&
-      caidaNum > 0 &&
-      frenteNum > 0;
-
-    if (!valid) {
-      return {
-        valid: false,
-        superficieIngresada: 0,
-        paneles: 0,
-        frenteRealCubierto: 0,
-        m2Reales: 0,
-        base: 0,
-        total: 0,
-        requiereApoyo: false,
-      };
-    }
-
-    const superficieIngresada = caidaNum * frenteNum;
-    const paneles = Math.ceil(frenteNum / PANEL_WIDTH);
-    const frenteRealCubierto = paneles * PANEL_WIDTH;
-    const m2Reales = frenteRealCubierto * caidaNum;
-
-    const base = m2Reales * PRICE_PER_M2;
-    const total = conCanaleta ? base * EXTRA_CANAL_MULT : base;
-    const requiereApoyo = caidaNum > 5.5;
-
-    return {
-      valid: true,
-      superficieIngresada,
-      paneles,
-      frenteRealCubierto,
-      m2Reales,
-      base,
-      total,
-      requiereApoyo,
-    };
-  }, [caida, frente, conCanaleta]);
-
-  const money = (n: number) =>
-    new Intl.NumberFormat("es-UY", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(n);
-
-  const waText = useMemo(() => {
-    const caidaText = caida || "-";
-    const frenteText = frente || "-";
-    const canal = conCanaleta ? "Sí" : "No";
-    const total = calc.valid ? money(calc.total) : "-";
-    const paneles = calc.valid ? String(calc.paneles) : "-";
-    const m2Material = calc.valid ? `${calc.m2Reales.toFixed(2)} m²` : "-";
-    const apoyo = calc.valid
-      ? calc.requiereApoyo
-        ? "Puede requerir apoyo porque la caída supera 5,50 m"
-        : "No marcado por la calculadora"
-      : "-";
-
-    return encodeURIComponent(
-      `Hola, quiero avanzar con un techo de isopanel.\n` +
-        `Caída / largo del panel: ${caidaText} m\n` +
-        `Frente / ancho a cubrir: ${frenteText} m\n` +
-        `Paneles estimados: ${paneles}\n` +
-        `M² reales estimados: ${m2Material}\n` +
-        `Canaleta / desagüe: ${canal}\n` +
-        `Zona: ${zona}\n` +
-        `Estructura existente: ${estructura}\n` +
-        `Tipo de trabajo: ${tipoTrabajo}\n` +
-        `Apoyo intermedio: ${apoyo}\n` +
-        `Estimación web: ${total}\n\n` +
-        `Les paso fotos si necesitan.`
-    );
-  }, [
-    caida,
-    frente,
-    conCanaleta,
-    zona,
-    estructura,
-    tipoTrabajo,
-    calc.valid,
-    calc.total,
-    calc.paneles,
-    calc.m2Reales,
-    calc.requiereApoyo,
-  ]);
-
-  const fireGtagEvent = (eventName: string, params?: Record<string, any>) => {
-    try {
-      if (typeof window !== "undefined" && typeof window.gtag === "function") {
-        window.gtag("event", eventName, params || {});
-      }
-    } catch {
-      // no-op
-    }
-  };
-
-  const handleCalculate = () => {
-    if (!calc.valid) return;
-
-    setShowResult(true);
-
-    fireGtagEvent("budget_calculated", {
-      section: "isopanel_budget",
-      estimated_value: Math.round(calc.total),
-      paneles: calc.paneles,
-      m2_input: Number(calc.superficieIngresada.toFixed(2)),
-      m2_material: Number(calc.m2Reales.toFixed(2)),
-      caida_m: Number(parseDecimal(caida).toFixed(2)),
-      frente_m: Number(parseDecimal(frente).toFixed(2)),
-      canaleta: conCanaleta ? "si" : "no",
-      zona,
-      estructura,
-      tipo_trabajo: tipoTrabajo,
-      requiere_apoyo: calc.requiereApoyo ? "si" : "no",
-      price_per_m2: PRICE_PER_M2,
-    });
-
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
-    if (isMobile && resultRef.current) {
-      setTimeout(() => {
-        resultRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }, 150);
-    }
-  };
-
-  const handleWhatsappClick = (placement: WhatsappPlacement) => {
-    const hasEstimate = calc.valid && showResult;
-
-    fireGtagEvent("whatsapp_click", {
-      section: "isopanel_budget",
-      placement,
-      has_estimate: hasEstimate,
-      estimated_value: calc.valid ? Math.round(calc.total) : undefined,
-      canaleta: conCanaleta ? "si" : "no",
-      zona,
-      estructura,
-      tipo_trabajo: tipoTrabajo,
-      price_per_m2: PRICE_PER_M2,
-    });
-
-    if (placement === "calculator_result" && hasEstimate) {
-      fireGtagEvent("whatsapp_click_after_estimate", {
-        section: "isopanel_budget",
-        estimated_value: Math.round(calc.total),
-        paneles: calc.paneles,
-        m2_material: Number(calc.m2Reales.toFixed(2)),
-        zona,
-        estructura,
-        tipo_trabajo: tipoTrabajo,
-      });
-
-      fireGtagEvent("conversion", {
-        send_to: ADS_SEND_TO,
-        value: 1.0,
-        currency: "USD",
-      });
-    }
-  };
-
-  useEffect(() => {
-    setShowResult(false);
-  }, [caida, frente, conCanaleta, zona, estructura, tipoTrabajo]);
-
+export default function FiltracionesPage() {
   return (
-    <>
-      <section className="relative w-full overflow-hidden">
-        <div className="relative min-h-[540px] md:h-[620px]">
-          <Image
-            src="/imagenes/unnamed.jpg"
-            alt="Techo de isopanel colocado"
-            fill
-            priority
-            className="hidden object-cover object-[center_35%] md:block"
-          />
+    <main className="bg-white text-slate-900">
+      <WhatsappButton className="fixed bottom-4 left-4 right-4 z-50 md:hidden">
+        Consultar por WhatsApp
+      </WhatsappButton>
 
-          <Image
-            src="/imagenes/mobile.png"
-            alt="Techo de isopanel colocado"
-            fill
-            priority
-            className="block object-cover object-[center_35%] md:hidden"
-          />
+      <section className="relative overflow-hidden bg-slate-950">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.22),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.14),transparent_34%)]" />
 
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/70 md:bg-gradient-to-r md:from-black/60 md:via-black/30 md:to-transparent" />
+        <div className="relative mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-24">
+          <div>
+            <p className="inline-flex items-center rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-200">
+              Montevideo, Ciudad de la Costa y zona metropolitana
+            </p>
 
-          <div className="relative z-10 mx-auto max-w-6xl px-5 py-9 sm:px-6 md:flex md:h-[620px] md:items-center md:py-0">
-            <div className="max-w-3xl text-white drop-shadow-[0_3px_14px_rgba(0,0,0,0.45)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80 md:text-sm">
-                Montevideo y zona metropolitana
+            <h1 className="mt-6 max-w-3xl text-4xl font-black tracking-tight text-white md:text-6xl">
+              Reparación de filtraciones en techos, azoteas y planchadas
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+              Solucionamos goteras, manchas de humedad y entradas de agua en
+              techos de isopanel, planchadas, azoteas, pretiles, canaletas,
+              desagües, babetas y encuentros contra muros.
+            </p>
+
+            <div className="mt-6 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-4">
+              <p className="text-sm leading-6 text-amber-100">
+                Enviá fotos por WhatsApp y te damos una primera orientación. No
+                aplicamos productos a ciegas: primero buscamos entender el origen
+                probable de la filtración y el estado general del techo.
               </p>
+            </div>
 
-              <h1 className="mt-3 max-w-[13ch] text-[clamp(38px,11vw,54px)] font-bold leading-[1.02] tracking-[-0.04em] md:max-w-[16ch] md:text-[clamp(52px,6.4vw,76px)]">
-                Hacemos tu techo de isopanel
-              </h1>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <WhatsappButton />
+              <a
+                href="#como-trabajamos"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-bold text-white transition hover:bg-white/15"
+              >
+                Ver cómo trabajamos
+                <FaArrowRight size={14} />
+              </a>
+            </div>
 
-              <p className="mt-4 max-w-[34ch] text-base font-medium leading-7 text-white/90 md:max-w-[42ch] md:text-[clamp(18px,2.5vw,25px)] md:leading-8">
-                Instalación completa con panel de 10 cm, estructura según el caso,
-                fijaciones, remates y sellado.
-              </p>
-
-              <div className="mt-6 hidden max-w-xl gap-3 sm:grid-cols-3 md:grid">
-                <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
-                    Servicio
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-white">
-                    Techo instalado
-                  </p>
-                  <p className="text-xs text-white/75">No vendemos material suelto</p>
-                </div>
-
-                <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
-                    Incluye
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-white">
-                    Panel + instalación
-                  </p>
-                  <p className="text-xs text-white/75">Fijaciones y remates</p>
-                </div>
-
-                <div className="rounded-2xl border border-white/15 bg-white/15 p-4 backdrop-blur-sm">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-white/65">
-                    Confirmación
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-white">
-                    Medidas y fotos
-                  </p>
-                  <p className="text-xs text-white/75">Revisamos tu caso</p>
-                </div>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-bold text-white">
+                  Orientación por fotos
+                </p>
+                <p className="mt-1 text-sm text-slate-400">
+                  Primera lectura del problema por WhatsApp.
+                </p>
               </div>
 
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-7">
-                <a
-                  href="https://wa.me/59895408688?text=Hola%2C%20quiero%20hacer%20un%20techo%20de%20isopanel"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => handleWhatsappClick("hero")}
-                  className="inline-flex items-center justify-center gap-3 rounded-2xl bg-white px-6 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-black/25 transition hover:bg-slate-100 md:px-7 md:py-3.5 md:text-base"
-                >
-                  <FaWhatsapp size={20} />
-                  Quiero hacer mi techo
-                </a>
-
-                <a
-                  href="#calculadora-isopanel"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/25 bg-black/35 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-black/25 transition hover:bg-black/45 md:px-7 md:py-3.5 md:text-base"
-                >
-                  Calcular precio estimado
-                </a>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-bold text-white">
+                  Diagnóstico técnico
+                </p>
+                <p className="mt-1 text-sm text-slate-400">
+                  Buscamos el origen, no solo la mancha.
+                </p>
               </div>
 
-              <p className="mt-3 max-w-sm text-xs leading-5 text-white/75 md:max-w-xl">
-                Pasá medidas o fotos y vemos tu caso en el momento.
-              </p>
-
-              <div className="mt-5 flex flex-wrap gap-2 text-xs text-white/85">
-                <span className="rounded-full bg-black/25 px-3 py-1">
-                  Isopanel 10 cm
-                </span>
-                <span className="rounded-full bg-black/25 px-3 py-1">
-                  Instalación completa
-                </span>
-                <span className="rounded-full bg-black/25 px-3 py-1">
-                  No vendemos material suelto
-                </span>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-bold text-white">
+                  Alcance claro
+                </p>
+                <p className="mt-1 text-sm text-slate-400">
+                  Te explicamos qué se trabaja y qué puede variar.
+                </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:px-6 md:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div>
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-sm md:p-6">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-red-600">
-                Antes de comparar solo por precio
-              </p>
+          <div className="rounded-[2rem] border border-white/10 bg-white p-6 shadow-2xl">
+            <div className="rounded-3xl bg-slate-50 p-6">
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+                <FaWater size={26} />
+              </div>
 
-              <h2 className="mt-3 text-2xl font-bold leading-tight tracking-tight text-slate-900 md:text-3xl">
-                Lo caro no es hacerlo bien. Lo caro es pagarlo dos veces.
+              <h2 className="mt-5 text-2xl font-black tracking-tight text-slate-900">
+                ¿Tenés agua entrando o manchas de humedad?
               </h2>
 
-              <p className="mt-4 text-base leading-7 text-slate-700 md:text-lg">
-                En un techo de isopanel no importa solo el panel. Importa cómo se
-                resuelven las fijaciones, la pendiente, los encuentros contra paredes,
-                las babetas, los goteros y el sellado.
+              <p className="mt-3 text-sm leading-6 text-slate-600">
+                Mandanos fotos del techo y de la humedad. Con eso podemos
+                identificar si conviene revisar fisuras, pretiles, desagües,
+                canaletas, membrana vieja, juntas, babetas o encuentros contra
+                paredes.
               </p>
 
-              <p className="mt-3 text-base leading-7 text-slate-700 md:text-lg">
-                Por eso cotizamos el techo completo, no solo el metro cuadrado de material.
-              </p>
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="text-sm font-semibold text-slate-900">
-                Cómo medir para calcular
-              </p>
-
-              <div className="mt-3 grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="font-semibold text-slate-900">
-                    1. Caída / largo del panel
-                  </p>
-                  <p className="mt-1">
-                    Es la distancia desde donde empieza el techo hasta donde cae el agua.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-slate-50 p-4">
-                  <p className="font-semibold text-slate-900">
-                    2. Frente / ancho a cubrir
-                  </p>
-                  <p className="mt-1">
-                    Es el lado que se divide en paneles de 1,14 m y se redondea hacia arriba.
+              <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                <div className="flex gap-3">
+                  <FaExclamationTriangle className="mt-1 shrink-0 text-amber-600" />
+                  <p className="text-sm leading-6 text-amber-900">
+                    No siempre la filtración está justo arriba de la mancha. El
+                    agua puede entrar por un punto, recorrer otra zona y aparecer
+                    lejos del origen.
                   </p>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-6 flex flex-wrap gap-2 text-xs text-slate-600 md:text-sm">
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Isopanel de 10 cm
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Instalación completa
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Fijaciones firmes
-              </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1.5">
-                Remates y sellados
-              </span>
-            </div>
-          </div>
-
-          <div
-            id="calculadora-isopanel"
-            className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-7 lg:sticky lg:top-24"
-          >
-            <div className="grid gap-5">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <p className="text-sm font-semibold text-slate-900">
-                  Calculá una referencia para tu techo
+              <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+                <p className="text-sm font-bold text-slate-900">
+                  Para responderte mejor, mandá:
                 </p>
 
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Ingresá medidas aproximadas y te mostramos una estimación para
-                  avanzar con tu techo.
-                </p>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+                  {fotosNecesarias.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <FaCheckCircle className="mt-1 shrink-0 text-emerald-600" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700">
-                    Caída / largo del panel – metros
-                  </label>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    value={caida}
-                    onChange={(e) => setCaida(e.target.value)}
-                    placeholder="Ej: 5"
-                    className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
-                  />
-                  <p className="mt-1 text-xs text-slate-500">
-                    Dirección en la que cae el agua.
-                  </p>
-                </div>
+              <WhatsappButton className="mt-6 w-full">
+                Enviar fotos y recibir orientación
+              </WhatsappButton>
 
-                <div>
-                  <label className="block text-sm font-medium text-slate-700">
-                    Frente / ancho a cubrir – metros
-                  </label>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    value={frente}
-                    onChange={(e) => setFrente(e.target.value)}
-                    placeholder="Ej: 10"
-                    className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
-                  />
-                  <p className="mt-1 text-xs text-slate-500">
-                    Este lado se divide entre paneles de 1,14 m.
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700">
-                    Zona
-                  </label>
-                  <select
-                    value={zona}
-                    onChange={(e) => setZona(e.target.value)}
-                    className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
-                  >
-                    <option>Montevideo</option>
-                    <option>Canelones / zona metropolitana</option>
-                    <option>Otra zona</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-slate-700">
-                    Estructura existente
-                  </label>
-                  <select
-                    value={estructura}
-                    onChange={(e) => setEstructura(e.target.value)}
-                    className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
-                  >
-                    <option>No sé / a revisar</option>
-                    <option>Sí, hay estructura</option>
-                    <option>No, hay que hacer estructura</option>
-                    <option>Hay techo existente para retirar</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-slate-700">
-                  Tipo de trabajo
-                </label>
-                <select
-                  value={tipoTrabajo}
-                  onChange={(e) => setTipoTrabajo(e.target.value)}
-                  className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base focus:border-slate-900 focus:outline-none"
-                >
-                  <option>Techo nuevo</option>
-                  <option>Reemplazo de techo</option>
-                  <option>Ampliación</option>
-                  <option>No sé / quiero asesoramiento</option>
-                </select>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setConCanaleta((v) => !v)}
-                className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-left transition ${
-                  conCanaleta
-                    ? "border-emerald-300 bg-emerald-50"
-                    : "border-slate-200 bg-slate-50 hover:bg-slate-100"
-                }`}
-                aria-pressed={conCanaleta}
-              >
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Agregar canaleta / desagüe
-                  </p>
-                  <p className="text-xs text-slate-600">
-                    Suma una referencia extra. Se confirma en obra.
-                  </p>
-                </div>
-
-                <div
-                  className={`h-6 w-11 rounded-full p-1 transition ${
-                    conCanaleta ? "bg-emerald-500" : "bg-slate-300"
-                  }`}
-                >
-                  <div
-                    className={`h-4 w-4 rounded-full bg-white transition ${
-                      conCanaleta ? "translate-x-5" : "translate-x-0"
-                    }`}
-                  />
-                </div>
-              </button>
-
-              {calc.valid && calc.requiereApoyo && (
-                <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
-                  <strong>Atención:</strong> la caída ingresada supera 5,50 m. En este
-                  caso puede requerir apoyo intermedio o una solución estructural específica.
-                </div>
-              )}
-
-              <button
-                type="button"
-                onClick={handleCalculate}
-                disabled={!calc.valid}
-                className={`rounded-2xl px-6 py-3 text-base font-semibold transition ${
-                  calc.valid
-                    ? "bg-slate-900 text-white hover:bg-slate-800"
-                    : "cursor-not-allowed bg-slate-200 text-slate-500"
-                }`}
-              >
-                Ver estimación para mi techo
-              </button>
-
-              <div ref={resultRef} className="rounded-2xl border border-slate-200 p-5">
-                {!showResult ? (
-                  <p className="text-sm text-slate-600">
-                    Ingresá la caída y el frente, completá los datos básicos y tocá{" "}
-                    <strong>“Ver estimación para mi techo”</strong>.
-                  </p>
-                ) : (
-                  <div className="space-y-4">
-                    <div className="rounded-2xl bg-slate-900 p-5 text-white">
-                      <p className="text-xs text-white/80">
-                        Estimación para hacer tu techo
-                      </p>
-                      <p className="mt-1 text-3xl font-semibold">{money(calc.total)}</p>
-
-                      <p className="mt-3 text-sm text-white/85">
-                        Instalación base{conCanaleta ? " + canaleta / desagüe" : ""}
-                      </p>
-
-                      <p className="mt-2 text-xs text-white/70">
-                        Este valor es orientativo según las medidas ingresadas.
-                      </p>
-
-                      <p className="mt-2 text-xs text-white/70">
-                        Si te sirve esta referencia, el siguiente paso es pasarnos fotos
-                        o coordinar detalles para confirmar el trabajo.
-                      </p>
-                    </div>
-
-                    <div className="grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
-                      <div className="rounded-2xl bg-slate-50 p-4">
-                        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                          Paneles estimados
-                        </p>
-                        <p className="mt-1 text-xl font-bold text-slate-900">
-                          {calc.paneles}
-                        </p>
-                      </div>
-
-                      <div className="rounded-2xl bg-slate-50 p-4">
-                        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                          M² reales estimados
-                        </p>
-                        <p className="mt-1 text-xl font-bold text-slate-900">
-                          {calc.m2Reales.toFixed(2)} m²
-                        </p>
-                      </div>
-                    </div>
-
-                    <a
-                      href={`https://wa.me/59895408688?text=${waText}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => handleWhatsappClick("calculator_result")}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-green-500 px-6 py-3 text-base font-semibold transition hover:bg-green-600"
-                    >
-                      <FaWhatsapp size={20} />
-                      Quiero avanzar con este techo
-                    </a>
-
-                    <p className="text-center text-xs text-slate-500">
-                      Te respondemos por WhatsApp para revisar medidas, fotos,
-                      estructura y confirmar el presupuesto final.
-                    </p>
-
-                    <p className="text-center text-xs text-slate-500">
-                      Si el trabajo tiene sentido, coordinamos visita técnica para
-                      dejarlo confirmado.
-                    </p>
-
-                    <details className="rounded-2xl bg-slate-50 p-4">
-                      <summary className="cursor-pointer text-sm font-semibold text-slate-900">
-                        Ver detalle del cálculo
-                      </summary>
-
-                      <div className="mt-3 space-y-1 text-sm text-slate-700">
-                        <p>
-                          Superficie ingresada:{" "}
-                          <strong>{calc.superficieIngresada.toFixed(2)} m²</strong>
-                        </p>
-                        <p>
-                          Paneles necesarios: <strong>{calc.paneles}</strong>
-                        </p>
-                        <p>
-                          Frente real cubierto:{" "}
-                          <strong>{calc.frenteRealCubierto.toFixed(2)} m</strong>
-                        </p>
-                        <p>
-                          Superficie estimada de material:{" "}
-                          <strong>{calc.m2Reales.toFixed(2)} m²</strong>
-                        </p>
-                        <p>
-                          Canaleta / desagüe:{" "}
-                          <strong>{conCanaleta ? "Sí" : "No"}</strong>
-                        </p>
-                        <p className="pt-2 text-xs text-slate-500">
-                          El cálculo contempla paneles de 1,14 m de ancho útil y se
-                          redondea a panel completo. Es una estimación, no presupuesto final.
-                        </p>
-                      </div>
-                    </details>
-                  </div>
-                )}
-              </div>
-
-              <p className="text-xs text-slate-500">
-                * La estimación puede variar según estructura, remates, canaletas,
-                acceso y condiciones reales del techo.
+              <p className="mt-4 text-center text-xs leading-5 text-slate-500">
+                La orientación inicial por WhatsApp es sin costo. Si hace falta
+                revisar en persona, coordinamos visita técnica.
               </p>
             </div>
           </div>
         </div>
       </section>
-    </>
+
+      <section className="border-b border-slate-200 bg-white py-14">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+                Antes de presupuestar
+              </p>
+
+              <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+                Primero revisamos el caso, después recomendamos la solución
+              </h2>
+
+              <p className="mt-4 text-lg leading-8 text-slate-600">
+                En filtraciones no conviene prometer soluciones sin mirar el
+                contexto. El agua puede entrar por fisuras, pretiles, desagües,
+                babetas, juntas, canaletas, pendientes mal resueltas o trabajos
+                anteriores deteriorados.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                <FaSearch className="text-emerald-700" size={24} />
+                <h3 className="mt-4 text-lg font-bold text-slate-900">
+                  Diagnóstico antes que producto
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  No recomendamos membrana, sellador o reparación puntual sin
+                  entender primero dónde puede estar el problema.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                <FaClipboardList className="text-emerald-700" size={24} />
+                <h3 className="mt-4 text-lg font-bold text-slate-900">
+                  Alcance del trabajo claro
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  Te explicamos qué puntos se trabajarían, qué queda fuera del
+                  alcance y qué puede hacer variar el presupuesto.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tipos-de-techo" className="mx-auto max-w-6xl px-6 py-16">
+        <div className="max-w-3xl">
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+            Tipos de techo
+          </p>
+
+          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+            Reparamos filtraciones según el sistema de techo
+          </h2>
+
+          <p className="mt-4 text-lg leading-8 text-slate-600">
+            Una filtración en isopanel, una planchada, una azotea o un techo de
+            chapa no se resuelven igual. Por eso primero identificamos el tipo de
+            techo y el punto probable de entrada de agua.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {tiposDeTecho.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+            >
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+                <FaHome size={20} />
+              </div>
+
+              <h3 className="mt-5 text-xl font-black text-slate-900">
+                {item.title}
+              </h3>
+
+              <p className="mt-3 leading-7 text-slate-600">{item.desc}</p>
+
+              <ul className="mt-5 space-y-2">
+                {item.puntos.map((punto) => (
+                  <li
+                    key={punto}
+                    className="flex gap-2 text-sm leading-6 text-slate-700"
+                  >
+                    <FaCheckCircle className="mt-1 shrink-0 text-emerald-600" />
+                    <span>{punto}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-50 py-16">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+              Problemas frecuentes
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+              ¿En qué casos podemos ayudarte?
+            </h2>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Trabajamos sobre problemas comunes de filtración en techos,
+              azoteas, planchadas y puntos donde el agua suele encontrar entrada.
+            </p>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {problemas.map((item) => (
+              <div
+                key={item}
+                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+              >
+                <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+                  <FaCheckCircle />
+                </div>
+
+                <p className="font-semibold text-slate-900">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="como-trabajamos" className="mx-auto max-w-6xl px-6 py-16">
+        <div className="max-w-3xl">
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+            Método de trabajo
+          </p>
+
+          <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+            Primero entendemos la filtración, después definimos el sistema
+          </h2>
+
+          <p className="mt-4 text-lg leading-8 text-slate-600">
+            En impermeabilización, el producto importa, pero la preparación y el
+            diagnóstico importan más. No todas las filtraciones se arreglan de
+            la misma manera.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {pasos.map((paso, index) => {
+            const Icon = paso.icon;
+
+            return (
+              <div
+                key={paso.title}
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-slate-900 text-white">
+                    <Icon size={20} />
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-bold text-emerald-700">
+                      Paso {index + 1}
+                    </p>
+
+                    <h3 className="mt-1 text-xl font-bold text-slate-900">
+                      {paso.title}
+                    </h3>
+
+                    <p className="mt-2 leading-7 text-slate-600">
+                      {paso.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-950 py-16 text-white">
+        <div className="mx-auto grid max-w-6xl gap-8 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-300">
+              Filtro comercial
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+              No hacemos parches a ciegas ni vendemos productos sueltos
+            </h2>
+
+            <p className="mt-4 text-lg leading-8 text-slate-300">
+              Nuestro objetivo es encontrar el origen probable de la filtración y
+              proponer una solución razonable según el estado del techo. A veces
+              alcanza con una reparación puntual; otras veces hay que tratar
+              pretiles, fisuras, desagües o una superficie completa.
+            </p>
+
+            <p className="mt-4 text-base leading-7 text-slate-400">
+              Antes de avanzar, buscamos dejar claro qué se va a trabajar y qué
+              factores pueden influir en el resultado: pendientes, humedad
+              previa, fisuras ocultas, membranas viejas, trabajos anteriores o
+              puntos críticos no visibles.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <FaCheckCircle className="text-emerald-300" size={24} />
+              <h3 className="mt-4 text-lg font-bold">
+                Orientación inicial sin costo
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Con fotos, videos, zona y tipo de techo podemos darte una primera
+                lectura del caso por WhatsApp.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <FaClipboardList className="text-emerald-300" size={24} />
+              <h3 className="mt-4 text-lg font-bold">
+                Visita técnica si corresponde
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Cuando hace falta revisar en obra, la visita puede tener costo
+                según la zona y se descuenta si se realiza el trabajo.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <FaTools className="text-emerald-300" size={24} />
+              <h3 className="mt-4 text-lg font-bold">
+                Solución según el caso
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Trabajamos reparación, sellado, preparación, refuerzos e
+                impermeabilización según lo que el techo necesite.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+              <FaExclamationTriangle className="text-amber-300" size={24} />
+              <h3 className="mt-4 text-lg font-bold">
+                Evaluamos trabajos puntuales
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                Para reparaciones muy chicas o zonas lejanas, primero revisamos
+                por fotos para confirmar si conviene coordinar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+              Importante
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+              No siempre alcanza con pasar membrana arriba
+            </h2>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Muchas impermeabilizaciones duran poco porque se aplica producto
+              sin preparar bien la base o sin resolver el punto real de entrada
+              de agua.
+            </p>
+
+            <div className="mt-7 rounded-3xl bg-slate-950 p-6 text-white">
+              <FaHome className="text-emerald-300" size={28} />
+
+              <h3 className="mt-4 text-xl font-bold">
+                Cada techo se revisa como un caso distinto
+              </h3>
+
+              <p className="mt-2 leading-7 text-slate-300">
+                Una azotea, una planchada, un techo de isopanel, una chapa, un
+                pretil o una canaleta no se resuelven igual. Por eso pedimos
+                fotos antes de orientar.
+              </p>
+            </div>
+
+            <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
+              <h3 className="text-xl font-black text-slate-900">
+                Trabajamos el problema, no solo el síntoma
+              </h3>
+
+              <p className="mt-2 leading-7 text-slate-700">
+                La solución puede incluir limpieza, reparación, sellado,
+                imprimación, malla, membrana líquida, membrana asfáltica,
+                corrección de encuentros o revisión de desagües según el caso.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h3 className="text-xl font-black text-slate-900">
+              ¿Por qué puede fallar una impermeabilización?
+            </h3>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {fallas.map((falla) => (
+                <div
+                  key={falla}
+                  className="flex gap-3 rounded-2xl bg-slate-50 p-4"
+                >
+                  <FaExclamationTriangle className="mt-1 shrink-0 text-amber-500" />
+                  <p className="text-sm font-medium leading-6 text-slate-700">
+                    {falla}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-50 py-16">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+              Soluciones posibles
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+              La solución depende del techo y del origen del problema
+            </h2>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              No recomendamos un producto único para todos los casos. Primero
+              vemos la superficie, los puntos críticos y el recorrido probable
+              del agua.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {soluciones.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <h3 className="text-lg font-bold text-slate-900">
+                  {item.title}
+                </h3>
+
+                <p className="mt-2 leading-7 text-slate-600">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+              Preguntas comunes
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+              Antes de presupuestar, conviene entender el origen
+            </h2>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              La idea es evitar soluciones rápidas que después vuelvan a filtrar.
+              Por eso pedimos fotos, zona, tipo de techo y datos básicos antes
+              de coordinar.
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {preguntas.map((item) => (
+              <div
+                key={item.q}
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <h3 className="text-lg font-bold text-slate-900">{item.q}</h3>
+                <p className="mt-2 leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-28 pt-16 md:pb-16">
+        <div className="rounded-[2rem] bg-emerald-600 p-8 text-white md:p-12">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-100">
+                Consulta inicial
+              </p>
+
+              <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+                Mandanos fotos y te orientamos por WhatsApp
+              </h2>
+
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-emerald-50">
+                Enviá foto general del techo, foto de la mancha o humedad, fotos
+                de pretiles/desagües/canaletas y un video corto si entra agua
+                cuando llueve.
+              </p>
+            </div>
+
+            <WhatsappButton className="bg-white text-emerald-700 hover:bg-emerald-50">
+              Enviar fotos y recibir orientación
+            </WhatsappButton>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
