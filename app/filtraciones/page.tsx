@@ -15,14 +15,11 @@ import {
 const WHATSAPP_NUMBER = "59895408688";
 
 const WHATSAPP_MESSAGE = encodeURIComponent(
-  `Hola, quiero consultar por una filtración / reparación de techo.
+  `Hola, quiero consultar por una filtración en techo.
 
 Zona:
-Tipo de techo: isopanel / planchada / azotea / chapa / no sé
-Problema: gotera / humedad / filtración / membrana vieja / otro
-¿Dónde aparece el agua o la humedad?
-¿Hace cuánto pasa?
-¿Tenés fotos o video del techo y de la humedad?`
+Tipo de techo:
+¿Tenés fotos o video?`
 );
 
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
@@ -50,7 +47,7 @@ const tiposDeTecho = [
   },
   {
     title: "Techos de chapa",
-    desc: "Trabajamos reparaciones puntuales de filtraciones en chapa, canaletas, cumbreras, solapes y encuentros críticos.",
+    desc: "Evaluamos reparaciones puntuales en chapa, canaletas, cumbreras, solapes y encuentros críticos, según el estado del techo.",
     puntos: [
       "Tornillería",
       "Cumbreras",
@@ -89,7 +86,7 @@ const pasos = [
   },
   {
     title: "Te pasamos una orientación clara",
-    desc: "Te explicamos qué se haría, qué puntos se trabajan, qué puede hacer variar el presupuesto y si conviene coordinar una visita técnica.",
+    desc: "Te explicamos qué se haría, qué puntos se trabajarían, qué puede hacer variar el presupuesto y si conviene coordinar una visita técnica.",
     icon: FaClipboardList,
   },
 ];
@@ -153,7 +150,7 @@ const preguntas = [
   },
   {
     q: "¿Hacen solo aplicación de producto?",
-    a: "No trabajamos como venta de producto suelto. Buscamos resolver el problema completo según el estado del techo y el origen probable de la filtración.",
+    a: "No hacemos aplicación de producto sin revisar el soporte. Trabajamos la solución según el estado real del techo: limpieza, reparación, sellado, imprimación, malla, membrana líquida, membrana asfáltica u otro sistema según el caso.",
   },
   {
     q: "¿La mancha indica exactamente dónde filtra?",
@@ -164,20 +161,24 @@ const preguntas = [
     a: "La orientación inicial por WhatsApp es sin costo. Si el caso requiere revisión en obra, la visita puede tener costo según la zona y se descuenta si se realiza el trabajo.",
   },
   {
-    q: "¿Dan garantía?",
-    a: "Cuando se realiza una reparación completa sobre los puntos acordados, se informa el alcance del trabajo y la garantía correspondiente según el sistema aplicado.",
+    q: "¿En qué zonas trabajan?",
+    a: "Trabajamos principalmente en Montevideo, Ciudad de la Costa, Ciudad del Plata y zona metropolitana. Para otras zonas evaluamos el caso según distancia, urgencia y tipo de trabajo.",
+  },
+  {
+    q: "¿Qué pasa si vuelve a aparecer humedad?",
+    a: "Antes de trabajar dejamos claro qué puntos se van a reparar y cuál es el alcance del trabajo. En filtraciones, el resultado depende del estado general del techo, pendientes, fisuras, pretiles, desagües, encuentros y trabajos anteriores.",
   },
 ];
 
 export const metadata = {
   title:
-    "Reparación de filtraciones en techos, azoteas y planchadas | MOD Soluciones",
+    "Reparación de filtraciones e impermeabilización de techos en Montevideo | MOD Soluciones",
   description:
-    "Reparación de goteras, humedad y filtraciones en techos de isopanel, chapa, azoteas y planchadas. Enviá fotos por WhatsApp y recibí una primera orientación.",
+    "Reparación de goteras, humedad y filtraciones en techos de isopanel, chapa, azoteas y planchadas en Montevideo, Ciudad de la Costa y zona metropolitana. Enviá fotos por WhatsApp y recibí una primera orientación.",
 };
 
 function WhatsappButton({
-  children = "Enviar fotos por WhatsApp",
+  children = "Consultar filtración por WhatsApp",
   className = "",
 }: {
   children?: ReactNode;
@@ -199,6 +200,10 @@ function WhatsappButton({
 export default function FiltracionesPage() {
   return (
     <main className="bg-white text-slate-900">
+      <WhatsappButton className="fixed bottom-4 left-4 right-4 z-50 md:hidden">
+        Consultar por WhatsApp
+      </WhatsappButton>
+
       <section className="relative overflow-hidden bg-slate-950">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.22),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.14),transparent_34%)]" />
 
@@ -209,30 +214,36 @@ export default function FiltracionesPage() {
             </p>
 
             <h1 className="mt-6 max-w-3xl text-4xl font-black tracking-tight text-white md:text-6xl">
-              Reparación de filtraciones en techos, azoteas y planchadas
+              Reparación de filtraciones e impermeabilización de techos en Montevideo
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
               Solucionamos goteras, manchas de humedad y entradas de agua en
-              techos de isopanel, chapa, planchadas, pretiles, canaletas,
-              desagües y encuentros contra muros.
+              techos de isopanel, planchadas, azoteas, pretiles, canaletas,
+              desagües, babetas y encuentros contra muros.
+            </p>
+
+            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-400">
+              Revisamos el problema como trabajo de construcción, no solo como
+              aplicación de producto. Primero buscamos entender el origen
+              probable de la filtración y el estado general del techo.
             </p>
 
             <div className="mt-6 rounded-2xl border border-amber-300/20 bg-amber-300/10 p-4">
               <p className="text-sm leading-6 text-amber-100">
-                Enviá fotos por WhatsApp y te damos una primera orientación. Si
-                el caso requiere revisión en obra, coordinamos visita técnica y
-                te proponemos una solución clara.
+                Enviá fotos por WhatsApp y te damos una primera orientación. La
+                entrada de agua puede dañar cielorrasos, pintura, instalación
+                eléctrica, muebles y terminaciones si no se revisa a tiempo.
               </p>
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <WhatsappButton />
               <a
-                href="#tipos-de-techo"
+                href="#como-trabajamos"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-sm font-bold text-white transition hover:bg-white/15"
               >
-                Ver tipos de techo
+                Ver cómo trabajamos
                 <FaArrowRight size={14} />
               </a>
             </div>
@@ -258,10 +269,10 @@ export default function FiltracionesPage() {
 
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <p className="text-sm font-bold text-white">
-                  Solución según caso
+                  Alcance claro
                 </p>
                 <p className="mt-1 text-sm text-slate-400">
-                  Isopanel, chapa, azotea o planchada.
+                  Te explicamos qué se trabaja y qué puede variar.
                 </p>
               </div>
             </div>
@@ -310,12 +321,61 @@ export default function FiltracionesPage() {
                 </ul>
               </div>
 
-              <WhatsappButton className="mt-6 w-full" />
+              <WhatsappButton className="mt-6 w-full">
+                Enviar fotos y recibir orientación
+              </WhatsappButton>
 
               <p className="mt-4 text-center text-xs leading-5 text-slate-500">
                 La orientación inicial por WhatsApp es sin costo. Si hace falta
                 revisar en persona, coordinamos visita técnica.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200 bg-white py-14">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
+                Antes de presupuestar
+              </p>
+
+              <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
+                Primero revisamos el caso, después recomendamos la solución
+              </h2>
+
+              <p className="mt-4 text-lg leading-8 text-slate-600">
+                En filtraciones no conviene prometer soluciones sin mirar el
+                contexto. El agua puede entrar por fisuras, pretiles, desagües,
+                babetas, juntas, canaletas, pendientes mal resueltas o trabajos
+                anteriores deteriorados.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                <FaSearch className="text-emerald-700" size={24} />
+                <h3 className="mt-4 text-lg font-bold text-slate-900">
+                  Diagnóstico antes que producto
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  No recomendamos membrana, sellador o reparación puntual sin
+                  entender primero dónde puede estar el problema.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+                <FaClipboardList className="text-emerald-700" size={24} />
+                <h3 className="mt-4 text-lg font-bold text-slate-900">
+                  Alcance del trabajo claro
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  Te explicamos qué puntos se trabajarían, qué queda fuera del
+                  alcance y qué puede hacer variar el presupuesto.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -332,9 +392,9 @@ export default function FiltracionesPage() {
           </h2>
 
           <p className="mt-4 text-lg leading-8 text-slate-600">
-            Una filtración en isopanel, una planchada y un techo de chapa no se
-            resuelven igual. Por eso primero identificamos el tipo de techo y el
-            punto probable de entrada de agua.
+            Una filtración en isopanel, una planchada, una azotea o un techo de
+            chapa no se resuelven igual. Por eso primero identificamos el tipo de
+            techo y el punto probable de entrada de agua.
           </p>
         </div>
 
@@ -404,10 +464,7 @@ export default function FiltracionesPage() {
         </div>
       </section>
 
-      <section
-        id="como-trabajamos"
-        className="mx-auto max-w-6xl px-6 py-16"
-      >
+      <section id="como-trabajamos" className="mx-auto max-w-6xl px-6 py-16">
         <div className="max-w-3xl">
           <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700">
             Método de trabajo
@@ -466,7 +523,7 @@ export default function FiltracionesPage() {
             </p>
 
             <h2 className="mt-3 text-3xl font-black tracking-tight md:text-4xl">
-              No hacemos parches a ciegas ni vendemos productos sueltos
+              No hacemos aplicación de producto sin revisar el soporte
             </h2>
 
             <p className="mt-4 text-lg leading-8 text-slate-300">
@@ -474,6 +531,12 @@ export default function FiltracionesPage() {
               proponer una solución razonable según el estado del techo. A veces
               alcanza con una reparación puntual; otras veces hay que tratar
               pretiles, fisuras, desagües o una superficie completa.
+            </p>
+
+            <p className="mt-4 text-base leading-7 text-slate-400">
+              Trabajamos la solución según el estado real del techo: limpieza,
+              reparación, sellado, imprimación, malla, membrana líquida,
+              membrana asfáltica u otro sistema según el caso.
             </p>
           </div>
 
@@ -503,11 +566,11 @@ export default function FiltracionesPage() {
             <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
               <FaTools className="text-emerald-300" size={24} />
               <h3 className="mt-4 text-lg font-bold">
-                Solución completa
+                Solución según el caso
               </h3>
               <p className="mt-2 text-sm leading-6 text-slate-300">
                 Trabajamos reparación, sellado, preparación, refuerzos e
-                impermeabilización según lo que el caso necesite.
+                impermeabilización según lo que el techo necesite.
               </p>
             </div>
 
@@ -658,7 +721,7 @@ export default function FiltracionesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-16">
+      <section className="mx-auto max-w-6xl px-6 pb-28 pt-16 md:pb-16">
         <div className="rounded-[2rem] bg-emerald-600 p-8 text-white md:p-12">
           <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
             <div>
@@ -677,7 +740,9 @@ export default function FiltracionesPage() {
               </p>
             </div>
 
-            <WhatsappButton className="bg-white text-emerald-700 hover:bg-emerald-50" />
+            <WhatsappButton className="bg-white text-emerald-700 hover:bg-emerald-50">
+              Enviar fotos y recibir orientación
+            </WhatsappButton>
           </div>
         </div>
       </section>
