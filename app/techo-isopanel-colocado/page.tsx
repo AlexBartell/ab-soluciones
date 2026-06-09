@@ -25,11 +25,11 @@ import {
   FaFileInvoiceDollar,
   FaExclamationTriangle,
   FaBuilding,
+  FaHandshake,
 } from "react-icons/fa";
 
 export const metadata: Metadata = {
-  title:
-    "Techo de isopanel colocado desde USD 99/m² | MOD Soluciones",
+  title: "Techo de isopanel colocado desde USD 99/m² | MOD Soluciones",
   description:
     "Instalación de techos de isopanel en Montevideo y zona metropolitana. Colocación completa, estructura, fijaciones, remates, sellado, canaletas y terminación.",
 };
@@ -42,7 +42,7 @@ const WHATSAPP_MESSAGE = encodeURIComponent(
 
 Zona:
 Medidas aproximadas:
-Tipo de trabajo: techo nuevo / cambio de techo / ampliación / reparación
+Tipo de trabajo: techo nuevo / cambio de techo / ampliación / patio / cochera / galería
 ¿Ya tienen estructura? sí / no / no sé
 ¿Hay que retirar techo anterior? sí / no / no sé
 ¿Tienen fotos o video del lugar?`
@@ -70,9 +70,9 @@ const idealForItems = [
     icon: FaLayerGroup,
   },
   {
-    title: "Corregir un techo mal resuelto",
-    text: "Revisión de remates, encuentros, tornillos, pendiente y filtraciones.",
-    icon: FaTools,
+    title: "Techo nuevo para obra o reforma",
+    text: "Instalación completa de techo con paneles, fijaciones, remates y sellado.",
+    icon: FaHardHat,
   },
 ];
 
@@ -137,24 +137,6 @@ const qualityPoints = [
   "La instalación profesional vale más que comparar solo el precio del panel.",
 ];
 
-const warningSigns = [
-  "Gotea en juntas, bordes o encuentros contra muro.",
-  "Se acumula agua en una zona del techo.",
-  "Hay tornillos visibles, flojos o mal sellados.",
-  "Faltan babetas, cumbreras, laterales o goteros.",
-  "La canaleta desborda o no evacua bien.",
-  "Aparecen filtraciones después de lluvias fuertes.",
-];
-
-const correctionPoints = [
-  "Mala pendiente o acumulación de agua.",
-  "Remates deficientes o mal instalados.",
-  "Filtraciones en juntas, uniones o solapes.",
-  "Encuentros contra muro mal sellados.",
-  "Tornillos mal resueltos o a la vista.",
-  "Canaletas, babetas o goteros insuficientes.",
-];
-
 const priceFactors = [
   {
     title: "Superficie",
@@ -216,8 +198,13 @@ const processSteps = [
   },
   {
     title: "Te pasamos presupuesto claro",
-    text: "Con alcance, materiales, mano de obra, condiciones, plazos y garantía según el caso.",
+    text: "Definimos alcance, materiales, mano de obra, condiciones, plazos, forma de pago y garantía según el caso.",
     icon: FaFileInvoiceDollar,
+  },
+  {
+    title: "Según el trabajo, firmamos contrato y empezamos",
+    text: "El contrato deja por escrito las condiciones para ambas partes: alcance, pagos, plazos, responsabilidades, cambios y garantía.",
+    icon: FaHandshake,
   },
 ];
 
@@ -232,23 +219,23 @@ const criticalPoints = [
 
 const trustItems = [
   {
-    title: "Fotos reales de obra",
-    text: "Mostramos trabajos y procesos reales, no solo imágenes genéricas.",
-    icon: FaCamera,
-  },
-  {
     title: "Presupuesto por escrito",
-    text: "Definimos alcance, materiales, condiciones y puntos incluidos.",
+    text: "Definimos alcance, materiales, condiciones, plazos y puntos incluidos.",
     icon: FaClipboardList,
   },
   {
+    title: "Contrato según el trabajo",
+    text: "Cuando corresponde, dejamos por escrito las condiciones para ambas partes antes de empezar.",
+    icon: FaHandshake,
+  },
+  {
     title: "Comunicación directa",
-    text: "Coordinación por WhatsApp para enviar fotos, medidas y avances.",
+    text: "Coordinación por WhatsApp para enviar medidas, fotos, ubicación y avances.",
     icon: FaWhatsapp,
   },
   {
     title: "Garantía según alcance",
-    text: "La garantía se informa según el trabajo realizado y las condiciones de obra.",
+    text: "La garantía se informa según el trabajo realizado y las condiciones reales de la obra.",
     icon: FaShieldAlt,
   },
 ];
@@ -266,8 +253,7 @@ const faqs = [
   },
   {
     question: "¿Desde cuánto puede arrancar un techo de isopanel colocado?",
-    answer:
-      `Como referencia, en trabajos simples puede arrancar desde USD ${BASE_PRICE_USD}/m². El precio final depende de superficie, estructura, altura, acceso, remates, canaletas, ubicación y condiciones reales de la obra.`,
+    answer: `Como referencia, en trabajos simples puede arrancar desde USD ${BASE_PRICE_USD}/m². El precio final depende de superficie, estructura, altura, acceso, remates, canaletas, ubicación y condiciones reales de la obra.`,
   },
   {
     question: "¿Qué puede cotizarse aparte?",
@@ -285,14 +271,14 @@ const faqs = [
       "Sí. La primera orientación por WhatsApp es ideal para entender el tipo de trabajo, ver fotos y saber si conviene coordinar visita.",
   },
   {
-    question: "¿También corrigen techos ya instalados?",
-    answer:
-      "Sí. Revisamos y corregimos problemas frecuentes como remates deficientes, encuentros contra muro, filtraciones, mala pendiente, tornillos mal colocados o canaletas mal resueltas.",
-  },
-  {
     question: "¿La visita técnica tiene costo?",
     answer:
       "Primero orientamos por fotos y medidas. Si el trabajo requiere visita técnica, se coordina y se aclara el costo antes. En algunos casos puede descontarse si se avanza con la obra.",
+  },
+  {
+    question: "¿Firman contrato?",
+    answer:
+      "Según el tipo y tamaño del trabajo, sí. El contrato permite dejar claras las condiciones para ambas partes: alcance, materiales, pagos, plazos, responsabilidades, cambios y garantía.",
   },
   {
     question: "¿Dan garantía?",
@@ -575,85 +561,6 @@ export default function TechoIsopanelColocadoPage() {
 
       <Projects />
 
-      <section className="border-y border-slate-200 bg-slate-50">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
-              Señales de alerta
-            </p>
-
-            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
-              Señales de que tu techo necesita revisión
-            </h2>
-
-            <p className="mt-4 text-lg leading-8 text-slate-600">
-              Si ya tenés alguno de estos problemas, conviene revisar antes de que
-              la filtración avance o dañe cielorraso, pintura, instalación eléctrica
-              o terminaciones interiores.
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            {warningSigns.map((item) => (
-              <div
-                key={item}
-                className="flex gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <FaExclamationTriangle className="mt-1 shrink-0 text-amber-500" />
-                <p className="text-sm font-semibold leading-6 text-slate-800">
-                  {item}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
-              Reparación y mejora
-            </p>
-
-            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
-              También corregimos techos mal resueltos
-            </h2>
-
-            <p className="mt-4 text-lg leading-8 text-slate-600">
-              Muchas filtraciones no aparecen por el panel, sino por detalles mal
-              ejecutados. Revisamos el problema, corregimos los puntos críticos y
-              dejamos el techo mejor resuelto.
-            </p>
-
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
-              {correctionPoints.map((item) => (
-                <div
-                  key={item}
-                  className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4"
-                >
-                  <FaCheckCircle className="mt-1 shrink-0 text-blue-600" />
-                  <p className="text-sm font-medium leading-6 text-slate-700">
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-[2rem] border border-blue-200 bg-blue-50 p-6 shadow-sm">
-            <FaExclamationTriangle className="text-blue-700" size={30} />
-            <h3 className="mt-4 text-2xl font-black tracking-tight text-slate-900">
-              Un techo mal resuelto puede seguir filtrando aunque el panel sea bueno
-            </h3>
-            <p className="mt-3 leading-7 text-slate-700">
-              Por eso revisamos encuentros, sellados, apoyos, pendientes,
-              tornillos, canaletas y remates. La diferencia está en los detalles.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className="border-y border-slate-200 bg-slate-950 text-white">
         <div className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-16">
           <div className="max-w-4xl">
@@ -720,11 +627,11 @@ export default function TechoIsopanelColocadoPage() {
 
             <p className="mt-4 text-lg leading-8 text-slate-600">
               Buscamos que el proceso sea claro desde la primera consulta hasta
-              el presupuesto final.
+              el inicio de la obra.
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
             {processSteps.map((step, index) => {
               const Icon = step.icon;
 
