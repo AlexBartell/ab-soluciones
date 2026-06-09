@@ -29,27 +29,52 @@ import {
 
 export const metadata: Metadata = {
   title:
-    "Techo de isopanel colocado con instalación completa | MOD Soluciones",
+    "Techo de isopanel colocado desde USD 99/m² | MOD Soluciones",
   description:
     "Instalación de techos de isopanel en Montevideo y zona metropolitana. Colocación completa, estructura, fijaciones, remates, sellado, canaletas y terminación.",
 };
 
 const WHATSAPP_NUMBER = "59895408688";
+const BASE_PRICE_USD = 99;
 
 const WHATSAPP_MESSAGE = encodeURIComponent(
   `Hola, quiero consultar por un techo de isopanel colocado.
 
 Zona:
 Medidas aproximadas:
-Tipo de trabajo: techo nuevo / cambio de techo / ampliación / otro
+Tipo de trabajo: techo nuevo / cambio de techo / ampliación / reparación
 ¿Ya tienen estructura? sí / no / no sé
+¿Hay que retirar techo anterior? sí / no / no sé
 ¿Tienen fotos o video del lugar?`
 );
 
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
-const HERO_DESKTOP_IMAGE = "/imagenes/heron.png";
-const HERO_MOBILE_IMAGE = "/imagenes/mob.png";
+const HERO_DESKTOP_IMAGE = "/imagenes/unnamed.jpg";
+const HERO_MOBILE_IMAGE = "/imagenes/mobile.png";
+
+const idealForItems = [
+  {
+    title: "Cambiar un techo viejo",
+    text: "Reemplazo de techos existentes por una solución más limpia, liviana y aislada.",
+    icon: FaHome,
+  },
+  {
+    title: "Cubrir patio, cochera o galería",
+    text: "Techos prolijos para espacios exteriores o semicubiertos.",
+    icon: FaBuilding,
+  },
+  {
+    title: "Ampliar una vivienda",
+    text: "Solución práctica para sumar metros cubiertos sin una obra pesada.",
+    icon: FaLayerGroup,
+  },
+  {
+    title: "Corregir un techo mal resuelto",
+    text: "Revisión de remates, encuentros, tornillos, pendiente y filtraciones.",
+    icon: FaTools,
+  },
+];
 
 const includedItems = [
   {
@@ -94,6 +119,15 @@ const includedItems = [
   },
 ];
 
+const quotedApartItems = [
+  "Estructura nueva, refuerzos o corrección de apoyos.",
+  "Canaletas, bajadas, desagües o modificación de salida de agua.",
+  "Retiro de techo anterior, escombros o materiales existentes.",
+  "Trabajos de albañilería, pretiles, muros o terminaciones externas.",
+  "Cielorraso, eléctrica, iluminación u otros trabajos interiores.",
+  "Traslados o logística fuera de Montevideo y zona metropolitana.",
+];
+
 const qualityPoints = [
   "Los remates mal hechos suelen terminar en filtraciones.",
   "Una pendiente mal resuelta puede dejar agua acumulada.",
@@ -101,6 +135,15 @@ const qualityPoints = [
   "Canaletas o desagües mal dimensionados complican la evacuación.",
   "Un buen sellado evita problemas y costos futuros.",
   "La instalación profesional vale más que comparar solo el precio del panel.",
+];
+
+const warningSigns = [
+  "Gotea en juntas, bordes o encuentros contra muro.",
+  "Se acumula agua en una zona del techo.",
+  "Hay tornillos visibles, flojos o mal sellados.",
+  "Faltan babetas, cumbreras, laterales o goteros.",
+  "La canaleta desborda o no evacua bien.",
+  "Aparecen filtraciones después de lluvias fuertes.",
 ];
 
 const correctionPoints = [
@@ -158,7 +201,7 @@ const priceFactors = [
 const processSteps = [
   {
     title: "Nos enviás fotos, medidas y ubicación",
-    text: "Caída aproximada, frente a cubrir, zona, altura y fotos del lugar.",
+    text: "Caída aproximada, frente a cubrir, zona, altura, fotos del lugar y si hay que retirar techo anterior.",
     icon: FaCamera,
   },
   {
@@ -167,8 +210,8 @@ const processSteps = [
     icon: FaComments,
   },
   {
-    title: "Si hace falta, coordinamos visita",
-    text: "Revisamos estructura, acceso, apoyos, remates, canaletas y medidas reales.",
+    title: "Si hace falta, coordinamos visita técnica",
+    text: "Revisamos estructura, acceso, apoyos, remates, canaletas y medidas reales. Según la zona puede tener costo y se descuenta si se realiza el trabajo.",
     icon: FaCalendarCheck,
   },
   {
@@ -187,6 +230,29 @@ const criticalPoints = [
   "Canaletas o desagües si corresponde.",
 ];
 
+const trustItems = [
+  {
+    title: "Fotos reales de obra",
+    text: "Mostramos trabajos y procesos reales, no solo imágenes genéricas.",
+    icon: FaCamera,
+  },
+  {
+    title: "Presupuesto por escrito",
+    text: "Definimos alcance, materiales, condiciones y puntos incluidos.",
+    icon: FaClipboardList,
+  },
+  {
+    title: "Comunicación directa",
+    text: "Coordinación por WhatsApp para enviar fotos, medidas y avances.",
+    icon: FaWhatsapp,
+  },
+  {
+    title: "Garantía según alcance",
+    text: "La garantía se informa según el trabajo realizado y las condiciones de obra.",
+    icon: FaShieldAlt,
+  },
+];
+
 const faqs = [
   {
     question: "¿Venden solo los paneles?",
@@ -201,12 +267,17 @@ const faqs = [
   {
     question: "¿Desde cuánto puede arrancar un techo de isopanel colocado?",
     answer:
-      "Como referencia, en trabajos simples puede arrancar desde USD 90/m². El precio final depende de superficie, estructura, altura, acceso, remates, canaletas, ubicación y condiciones reales de la obra.",
+      `Como referencia, en trabajos simples puede arrancar desde USD ${BASE_PRICE_USD}/m². El precio final depende de superficie, estructura, altura, acceso, remates, canaletas, ubicación y condiciones reales de la obra.`,
+  },
+  {
+    question: "¿Qué puede cotizarse aparte?",
+    answer:
+      "Puede cotizarse aparte la estructura nueva, refuerzos, canaletas, retiro del techo anterior, trabajos de albañilería, cielorraso, eléctrica o traslados fuera de zona.",
   },
   {
     question: "¿Qué medidas necesito para consultar?",
     answer:
-      "Lo ideal es pasar caída o largo del panel, frente o ancho a cubrir, zona, altura aproximada y fotos del lugar. Con eso podemos orientarte mucho mejor.",
+      "Lo ideal es pasar caída o largo del panel, frente o ancho a cubrir, zona, altura aproximada, si hay que retirar techo anterior y fotos del lugar. Con eso podemos orientarte mucho mejor.",
   },
   {
     question: "¿Pueden orientarme por WhatsApp?",
@@ -290,9 +361,19 @@ export default function TechoIsopanelColocadoPage() {
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200">
               Instalamos techos de isopanel para viviendas, patios, ampliaciones
               y reemplazo de techos existentes. Nos encargamos de estructura,
-              fijaciones, remates, sellado y terminación para que quede bien
-              resuelto desde el primer día.
+              fijaciones, remates, sellado y terminación para evitar improvisaciones
+              y dejar el techo listo para usar.
             </p>
+
+            <div className="mt-6 inline-flex flex-col gap-1 rounded-2xl border border-blue-300/25 bg-blue-500/10 px-5 py-4 text-white backdrop-blur sm:flex-row sm:items-center sm:gap-2">
+              <span className="text-sm font-bold text-blue-100">
+                Referencia desde USD {BASE_PRICE_USD}/m²
+              </span>
+              <span className="hidden text-blue-200 sm:inline">•</span>
+              <span className="text-sm text-slate-200">
+                en trabajos simples, sujeto a estructura, remates, altura y condiciones reales.
+              </span>
+            </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <WhatsappButton />
@@ -330,6 +411,40 @@ export default function TechoIsopanelColocadoPage() {
                 Te explicamos qué incluye, qué puede variar y cómo se ejecuta.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-5 py-12 md:px-6 md:py-14">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
+              Ideal para
+            </p>
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+              Cuando querés resolver el techo completo, no solo comprar paneles
+            </h2>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {idealForItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm"
+                >
+                  <Icon className="text-blue-700" size={24} />
+                  <h3 className="mt-4 text-lg font-bold text-slate-900">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    {item.text}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -379,6 +494,39 @@ export default function TechoIsopanelColocadoPage() {
       </section>
 
       <section className="border-y border-slate-200 bg-slate-50">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-16 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
+              Alcance del presupuesto
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+              ¿Qué puede cotizarse aparte según el caso?
+            </h2>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Para evitar confusiones, dejamos claro qué puntos pueden cambiar el
+              presupuesto final según la obra real.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {quotedApartItems.map((item) => (
+              <div
+                key={item}
+                className="flex gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+              >
+                <FaExclamationTriangle className="mt-1 shrink-0 text-amber-500" />
+                <p className="text-sm font-medium leading-6 text-slate-700">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
             <img
@@ -410,18 +558,56 @@ export default function TechoIsopanelColocadoPage() {
               ))}
             </ul>
 
-            <div className="mt-7 rounded-3xl border border-blue-200 bg-white p-6 shadow-sm">
+            <div className="mt-7 rounded-3xl border border-blue-200 bg-blue-50 p-6 shadow-sm">
               <p className="text-sm leading-6 text-slate-700">
                 Un techo de isopanel no falla solo por el panel. La mayoría de
                 los problemas aparecen en detalles: remates, encuentros,
                 tornillos, pendientes, canaletas y sellados.
               </p>
+
+              <div className="mt-5">
+                <WhatsappButton>Quiero que revisen mi caso</WhatsappButton>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <Projects />
+
+      <section className="border-y border-slate-200 bg-slate-50">
+        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
+              Señales de alerta
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+              Señales de que tu techo necesita revisión
+            </h2>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Si ya tenés alguno de estos problemas, conviene revisar antes de que
+              la filtración avance o dañe cielorraso, pintura, instalación eléctrica
+              o terminaciones interiores.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2">
+            {warningSigns.map((item) => (
+              <div
+                key={item}
+                className="flex gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+              >
+                <FaExclamationTriangle className="mt-1 shrink-0 text-amber-500" />
+                <p className="text-sm font-semibold leading-6 text-slate-800">
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -510,7 +696,7 @@ export default function TechoIsopanelColocadoPage() {
 
           <div className="mt-8 rounded-3xl border border-blue-300/25 bg-blue-500/10 p-6">
             <p className="text-lg font-black text-white">
-              Referencia orientativa: desde USD 90/m² en trabajos simples.
+              Referencia orientativa: desde USD {BASE_PRICE_USD}/m² en trabajos simples.
             </p>
             <p className="mt-2 text-sm leading-6 text-slate-300">
               El precio final puede variar por estructura, altura, acceso,
@@ -615,6 +801,41 @@ export default function TechoIsopanelColocadoPage() {
 
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
+              Confianza
+            </p>
+
+            <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 md:text-4xl">
+              Por qué confiar en MOD Soluciones
+            </h2>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {trustItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-3xl border border-slate-200 bg-slate-50 p-6"
+                >
+                  <Icon className="text-blue-700" size={24} />
+                  <h3 className="mt-4 text-lg font-bold text-slate-900">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    {item.text}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-50">
+        <div className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-16">
           <div className="rounded-[2rem] border border-blue-200 bg-blue-50 p-8 shadow-sm md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
@@ -627,9 +848,9 @@ export default function TechoIsopanelColocadoPage() {
                 </h2>
 
                 <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-700">
-                  Podés usar la calculadora orientativa de techo de isopanel o
-                  enviarnos medidas y fotos por WhatsApp para una primera
-                  orientación.
+                  La referencia base para trabajos simples es desde USD{" "}
+                  {BASE_PRICE_USD}/m². También podés usar la calculadora
+                  orientativa o enviarnos medidas y fotos por WhatsApp.
                 </p>
               </div>
 
@@ -648,7 +869,7 @@ export default function TechoIsopanelColocadoPage() {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50">
+      <section className="border-y border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-5 py-14 md:px-6 md:py-16">
           <div className="max-w-4xl">
             <p className="text-sm font-bold uppercase tracking-[0.14em] text-blue-700">
@@ -664,7 +885,7 @@ export default function TechoIsopanelColocadoPage() {
             {faqs.map((faq) => (
               <details
                 key={faq.question}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                className="rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
               >
                 <summary className="cursor-pointer text-base font-bold text-slate-900">
                   {faq.question}
