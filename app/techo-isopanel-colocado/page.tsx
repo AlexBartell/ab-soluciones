@@ -48,8 +48,8 @@ Tipo de trabajo: techo nuevo / cambio de techo / ampliación / otro
 
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
-const HERO_DESKTOP_IMAGE = "/images/heron.png";
-const HERO_MOBILE_IMAGE = "/images/mob.png";
+const HERO_DESKTOP_IMAGE = "/imagenes/heron.png";
+const HERO_MOBILE_IMAGE = "/imagenes/mob.png";
 
 const includedItems = [
   {
