@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Projects from "@/components/Projects";
 import Link from "next/link";
 import {
   FaWhatsapp,
@@ -259,16 +260,19 @@ export default function TechoIsopanelColocadoPage() {
       </WhatsappButton>
 
       <section className="relative overflow-hidden bg-slate-950">
-        <picture className="absolute inset-0">
-          <source media="(min-width: 768px)" srcSet={HERO_DESKTOP_IMAGE} />
-          <img
-            src={HERO_MOBILE_IMAGE}
-            alt="Instalación de techo de isopanel por MOD Soluciones"
-            className="h-full w-full object-cover object-center"
-          />
-        </picture>
+        <img
+          src={HERO_MOBILE_IMAGE}
+          alt="Instalación de techo de isopanel por MOD Soluciones"
+          className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+        />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/92 via-slate-950/72 to-slate-950/58 md:bg-gradient-to-r md:from-slate-950 md:via-slate-950/86 md:to-slate-950/18" />
+        <img
+          src={HERO_DESKTOP_IMAGE}
+          alt="Instalación de techo de isopanel por MOD Soluciones"
+          className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/94 via-slate-950/76 to-slate-950/60 md:bg-gradient-to-r md:from-slate-950 md:via-slate-950/86 md:to-slate-950/20" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.26),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(34,197,94,0.18),transparent_30%)]" />
 
         <div className="relative mx-auto max-w-6xl px-5 py-16 md:px-6 md:py-24">
@@ -416,6 +420,8 @@ export default function TechoIsopanelColocadoPage() {
           </div>
         </div>
       </section>
+
+      <Projects />
 
       <section className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:px-6 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
